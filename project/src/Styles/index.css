@@ -1,0 +1,41 @@
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+input:focus, textarea:focus, select:focus, button:focus{
+  outline: none;
+}
+
+body {
+  margin: auto;
+  max-width: 100vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.btn {
+  border: 1px solid #f4f5f6;;
+  background-color: rgba(0,0,0,0);
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #f4f5f6;
+}
+
+.btn:hover {
+  color: #fce38a;
+  border: 1px solid #fce38a;
+}
+
+.btn-getstarted {
+  background-color: #52cc65;
+}
