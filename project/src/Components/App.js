@@ -3,8 +3,8 @@ import '../Styles/App.css';
 
 function App() {
   return (
-    <div>
-      App
+    <div id="main">
+      *proizvedenie isskustva vashche top proect*
     </div>
   );
 }
