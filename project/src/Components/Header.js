@@ -2,18 +2,18 @@ import React from 'react';
 import '../Styles/Header.css';
 
 const name = "Culture Cloud";
-const curUser = undefined;
-// const curUser = {
-//     avaUrl: "https://cs16planet.ru/steam-avatars/images/avatar1833.jpg",
-//     email: "kpimarianenko@gmail.com",
-//     passwordHash: "tipa hash",
-//     name: "Roman Marianenko",
-//     role: 0
-// }
+// const curUser = undefined;
+const curUser = {
+    avaUrl: "https://cs16planet.ru/steam-avatars/images/avatar1833.jpg",
+    email: "kpimarianenko@gmail.com",
+    passwordHash: "tipa hash",
+    name: "Roman Marianenko",
+    role: 0
+}
 
 function ifUserIs(role, element) {
     if (curUser)
-        if (curUser.role == role)
+        if (curUser.role === role)
             return element;
 }
 
@@ -34,7 +34,7 @@ function Header() {
         <div className="profile_info">
             {(curUser) ? 
             (<span className="profile">
-                <img className="ava" src={curUser.avaUrl}></img>
+                <img className="ava" alt="User avatar" src={curUser.avaUrl}></img>
                 <span className="name-wrapper">
                     <p className="name">{curUser.name}</p>
                     <div className="dropdown-caret"></div>

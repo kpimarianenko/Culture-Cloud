@@ -40,6 +40,7 @@
 
 .authbtns {
     max-width: 100%;
+    margin: auto 0;
 }
 
 .btn {
@@ -80,7 +81,8 @@
     display: block;
     content: "";
     left: calc(100% + 5px);
-
+    width: 0;
+    height: 0; 
 }
 
 .dropdown-caret::after {
