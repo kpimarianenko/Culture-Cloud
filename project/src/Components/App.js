@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import '../Styles/App.css';
 
-class App extends Component {
+let timer;
 
+class App extends Component {
   componentDidMount() {
     const slider = {
       slides: document.querySelectorAll(".slide"),
@@ -13,7 +14,7 @@ class App extends Component {
         {
           const circle = document.createElement('div');
           circle.classList.add("circle");
-          if (i == 0) circle.classList.add("active");
+          if (i === 0) circle.classList.add("active");
           circle.addEventListener("click", function(){
             const index = [...this.parentElement.children].indexOf(this)
             slider.index = index;
@@ -44,7 +45,11 @@ class App extends Component {
     slider.createCircles();
     slider.prev_.addEventListener("click", slider.prev);
     slider.next_.addEventListener("click", slider.next);
-    let timer = setInterval(slider.next, 6000);
+    timer = setInterval(slider.next, 6000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(timer);
   }
 
   render() {
@@ -62,7 +67,7 @@ class App extends Component {
           <div className="slide slide-2">
             <div className="container">
               <div className="caption">
-                <h2>Net, eto budet ne chlen</h2>
+                <h2>Bla-bla-bla-bla-bla</h2>
                 <p>Lorem ipsum tudim siudim</p>
               </div>
             </div>
@@ -70,7 +75,7 @@ class App extends Component {
           <div className="slide slide-3">
             <div className="container">
               <div className="caption">
-                <h2>Hotia hui ego znaet. Mozhn i chlen)00</h2>
+                <h2>i tut tozhe bla-bla-bla)00</h2>
                 <p>Lorem ipsum tudim siudim</p>
               </div>
             </div>
@@ -78,7 +83,7 @@ class App extends Component {
           <div className="slide slide-4">
             <div className="container">
               <div className="caption">
-                <h2>Da, opredelenno chlen!</h2>
+                <h2>Nu pozhalui i tut bla-bla-bla!</h2>
                 <p>Lorem ipsum tudim siudim</p>
               </div>
             </div>

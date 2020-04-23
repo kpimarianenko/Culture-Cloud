@@ -10,6 +10,10 @@
     white-space: nowrap;
 }
 
+h1 {
+    margin-right: 30px;
+}
+
 .menu, .nav-menu, #header, .profile {
     justify-content: space-between;
     display: flex;
@@ -26,16 +30,22 @@
     text-decoration: none;
     color: #f4f5f6;
     vertical-align: auto;
-    margin: auto 10px;
+    margin: auto 0px;
+}
+
+.nav-element::after {
+    content: "";
+    margin: 0 10px;
+    border: 1px solid #f4f5f6;
+}
+
+.nav-element:last-child:after {
+    display: none;
 }
 
 .nav-element:hover {
     cursor: pointer;
     color: #fce38a;
-}
-
-.nav-element:hover:after {
-    display: block;
 }
 
 .authbtns {

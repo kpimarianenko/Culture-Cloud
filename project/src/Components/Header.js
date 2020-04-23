@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Styles/Header.css';
+import { Link } from "react-router-dom";
 
 const name = "Culture Cloud";
 // const curUser = undefined;
@@ -23,12 +24,12 @@ function Header() {
         <div className="menu">
             <h1>{name}</h1>
             <div className="nav-menu">
-                <a className="nav-element" href="/">Головна</a>
-                <a className="nav-element" href="/collaborators">Вже з нами</a>
-                <a className="nav-element" href="/contacts">Контакти</a>
-                <a className="nav-element" href="/excursions">Екскурсії</a>
-                {ifUserIs(1, <a className="nav-element" href="/excursions">Екскурсії</a>)}
-                <a className="nav-element" href="/about">Про нас</a>
+                <Link className="nav-element" to="/">Головна</Link>
+                <Link className="nav-element" to="/collaborators">Вже з нами</Link>
+                <Link className="nav-element" to="/contacts">Контакти</Link>
+                <Link className="nav-element" to="/excursions">Екскурсії</Link>
+                {ifUserIs(1, <Link className="nav-element" to="/excursions">Екскурсії</Link>)}
+                <Link className="nav-element" to="/about">Про нас</Link>
             </div>
         </div>
         <div className="profile_info">
