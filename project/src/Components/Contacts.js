@@ -4,7 +4,7 @@ import '../Styles/Contacts.css';
 class Contacts extends Component {
     render() {
         return (
-            <div class="contacts">
+            <div className="contacts">
                 RABOTAET
             </div>
         )
