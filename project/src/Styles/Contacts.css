@@ -1,0 +1,100 @@
+.map__element {
+    height: 100%;
+}
+
+.contacts {
+    max-width: 100vw;
+}
+
+.map__wrapper {
+    margin-bottom: 20px;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.map {
+    width: 100%;
+    height: 60vh;
+}
+
+.network__logo__outer {
+    background-color: #e96559;
+    padding: 30px;
+    border-radius: 100%;
+    max-width:  50px;
+    max-height: 50px;
+    min-width:  50px;
+    min-height: 50px;
+    margin: auto;
+}
+
+.network__logo {
+    width: 100%;
+}
+
+.contact__header {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 60px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.social__networks {
+    margin: auto;
+    min-width: 50%;
+    width: 50%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.network__name {
+    margin: 5px;
+    letter-spacing: 4px;
+    text-align: center;
+    font-weight: 100;
+    text-transform: uppercase;
+}
+
+.network__info {
+    margin: 5px;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-align: center;
+    color: black;
+    text-decoration: underline;
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.logo > img {
+    max-width: 100px;
+    margin-bottom: 10px;
+}
+
+.address {
+    display: flex;
+    flex-direction: row;
+    background-color: #f3f2ef;
+    padding: 30px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom: 2px solid #e3e2ef;
+}
+
+.address > img {
+    max-width: 20px;
+    max-height: 20px;
+    margin-right: 5px;
+}
+
+.address > p {
+    line-height: 20px;
+    font-size: 20px;
+}

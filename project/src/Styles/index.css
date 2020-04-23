@@ -2,10 +2,6 @@ p, h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-h1 {
-  margin-right: 30px;
-}
-
 input:focus, textarea:focus, select:focus, button:focus{
   outline: none;
 }

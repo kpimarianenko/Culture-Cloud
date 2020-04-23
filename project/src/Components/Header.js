@@ -25,6 +25,7 @@ class Header extends Component {
           <div id="header">
               <div className="menu">
                   <h1>{name}</h1>
+                  <img src="/images/logo-white.png" alt="logo_bull" className="logo"/>
                   <div className="nav-menu">
                       <Link className="nav-element" to="/">Головна</Link>
                       <Link className="nav-element" to="/collaborators">Вже з нами</Link>

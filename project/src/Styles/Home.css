@@ -106,17 +106,17 @@
 }
 
 .slide-1 {
-    background-image: url("/slide1.jpg");
+    background-image: url("/images/slide1.jpg");
 }
 
 .slide-2 {
-    background-image: url("/slide2.jpg");
+    background-image: url("/images/slide2.jpg");
 }
 
 .slide-3 {
-    background-image: url("/slide3.jpg");
+    background-image: url("/images/slide3.jpg");
 }
 
 .slide-4 {
-    background-image: url("/slide4.jpg");
+    background-image: url("/images/slide4.jpg");
 }

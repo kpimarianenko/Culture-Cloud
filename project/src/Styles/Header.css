@@ -25,13 +25,15 @@
     vertical-align: top;
     text-decoration: none;
     color: #f4f5f6;
-    vertical-align: auto;
     margin: auto 0px;
 }
 
 .nav-element::after {
     content: "";
     margin: 0 10px;
+    max-width: 2px;
+    width: 100%;
+    background-color: #f4f5f6;
     border: 1px solid #f4f5f6;
 }
 
@@ -55,6 +57,8 @@
 
 .profile_info {
     max-width: 320px;
+    display: flex;
+    align-items: center;
 }
 
 .ava {
@@ -126,4 +130,16 @@
 
 .dropdown-menu-element:hover {
     background-color: #f6f6f6;
+}
+
+.menu .logo {
+    width: 45px;
+    height: 45px;
+    margin: auto 10px;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    margin: auto 0;
 }
