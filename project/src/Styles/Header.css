@@ -10,10 +10,6 @@
     white-space: nowrap;
 }
 
-h1 {
-    margin-right: 30px;
-}
-
 .menu, .nav-menu, #header, .profile {
     justify-content: space-between;
     display: flex;

@@ -3,6 +3,7 @@ import '../Styles/Header.css';
 import { Link } from "react-router-dom";
 
 const name = "Culture Cloud";
+
 // const curUser = undefined;
 const curUser = {
     avaUrl: "https://cs16planet.ru/steam-avatars/images/avatar1833.jpg",
