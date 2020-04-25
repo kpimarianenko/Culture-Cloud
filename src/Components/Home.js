@@ -90,10 +90,10 @@ class Home extends Component {
           </div>
           <div className="controls">
             <div className="controls-inner">
-              <img className="slider-control" src="./back.svg" alt="back arrow" id="prev" />
+              <img className="slider-control" src="/images/back.svg" alt="back arrow" id="prev" />
               <div id="circles">
               </div>
-              <img className="slider-control" src="./forward.svg" alt="forward arrow" id="next" />
+              <img className="slider-control" src="/images/forward.svg" alt="forward arrow" id="next" />
             </div>
           </div>
         </div>

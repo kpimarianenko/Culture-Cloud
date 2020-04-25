@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
 import '../Styles/Header.css';
 import { Link } from "react-router-dom";
+import project from '../projectInfo';
 
-const name = "Culture Cloud";
-
-// const curUser = undefined;
 const curUser = {
     avaUrl: "https://cs16planet.ru/steam-avatars/images/avatar1833.jpg",
     email: "kpimarianenko@gmail.com",
     passwordHash: "tipa hash",
     name: "Roman Marianenko",
-    role: 0
+    role: 1
 }
 
 function ifUserIs(role, element) {
@@ -24,15 +22,15 @@ class Header extends Component {
         return ( 
           <div id="header">
               <div className="menu">
-                  <h1>{name}</h1>
+                  <h1>{project.name}</h1>
                   <img src="/images/logo-white.png" alt="logo_bull" className="logo"/>
                   <div className="nav-menu">
-                      <Link className="nav-element" to="/">Головна</Link>
-                      <Link className="nav-element" to="/collaborators">Вже з нами</Link>
-                      <Link className="nav-element" to="/contacts">Контакти</Link>
-                      <Link className="nav-element" to="/excursions">Екскурсії</Link>
-                      {ifUserIs(1, <Link className="nav-element" to="/excursions">Екскурсії</Link>)}
-                      <Link className="nav-element" to="/about">Про нас</Link>
+                      <Link className="nav-element" to="/">Home</Link>
+                      <Link className="nav-element" to="/collaborators">With us</Link>
+                      <Link className="nav-element" to="/contacts">Contacts</Link>
+                      {ifUserIs(1, <Link className="nav-element" to="/exhibits">Exhibits</Link>)}
+                      {ifUserIs(1, <Link className="nav-element" to="/excursions">Excursions</Link>)}
+                      <Link className="nav-element" to="/about">About</Link>
                   </div>
               </div>
               <div className="profile_info">

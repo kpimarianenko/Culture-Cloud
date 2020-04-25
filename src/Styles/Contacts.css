@@ -66,6 +66,11 @@
     text-decoration: underline;
 }
 
+.network__info:hover {
+    color: #7070bf;
+    transition: color 0.3s;
+}
+
 .logo {
     width: 100%;
     display: flex;

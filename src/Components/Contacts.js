@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker } from "react-google-maps"
 import '../Styles/Contacts.css';
+import project from '../projectInfo';
 
 function Map() {
     return (
@@ -17,7 +18,7 @@ class Contacts extends Component {
         return (
             <div className="contacts">
                 <div className="contacts__wrapper">
-                    <h2 className="contact__header">Culture Cloud</h2>
+                    <h2 className="contact__header">{project.name}</h2>
                     <div className="logo">
                         <img src="/images/logo-black.png" alt="logo_bull"/>
                     </div>
@@ -27,14 +28,14 @@ class Contacts extends Component {
                                 <img src="/images/gmail.png" alt="mail" className="network__logo" />
                             </div>
                             <h3 className="network__name">Email</h3>
-                            <p className="network__info">culture.cloud@gmail.com</p>
+                            <a href={`mailto:${project.email}`}><p className="network__info">{project.email}</p></a>
                         </div>
                         <div className="network">
                             <div className="network__logo__outer">
                                 <img src="/images/phone.png" alt="phone" className="network__logo" />
                             </div>
                             <h3 className="network__name">Phone</h3>
-                            <p className="network__info">+38(050)4442334</p>
+                            <p className="network__info">{project.phone}</p>
                         </div>
                         <div className="network">
                             <div className="network__logo__outer">
@@ -48,7 +49,7 @@ class Contacts extends Component {
                                 <img src="/images/skype.png" alt="skype" className="network__logo" />
                             </div>
                             <h3 className="network__name">Skype</h3>
-                            <p className="network__info">CultureCloud</p>
+                            <p className="network__info">{project.skype}</p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +65,7 @@ class Contacts extends Component {
                     </div>
                     <div className="address">
                         <img src="/images/pin.png" alt="pin"/>
-                        <p>Peremohy Ave, 37, Kyiv, 03056</p>
+                        <p>{project.address}</p>
                     </div>
                 </div>
             </div>
