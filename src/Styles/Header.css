@@ -42,6 +42,7 @@
 }
 
 .nav-element:hover {
+    transition: color 0.2s;
     cursor: pointer;
     color: #fce38a;
 }
@@ -51,7 +52,7 @@
     margin: auto 0;
 }
 
-.btn {
+.authbtns > .btn {
     margin: auto 5px;
 }
 
@@ -142,4 +143,9 @@ h1 {
     display: flex;
     align-items: center;
     margin: auto 0;
+}
+
+.btn {
+    border: 1px solid #f4f5f6;
+    color: #f4f5f6;
 }

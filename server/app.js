@@ -14,7 +14,10 @@ const connectOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(busBoyBodyParser({ limit: '10mb' }));
+app.use(busBoyBodyParser({ limit: '15mb' }));
+
+const apiRouter = require('./api/v1/api');
+app.use('/api/v1', apiRouter);
 
 mongoose.connect(url, connectOptions)
     .then(() => console.log(`Database connected`))

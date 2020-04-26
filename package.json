@@ -12,6 +12,7 @@
     "express-fileupload": "^1.1.7-alpha.3",
     "mongoose": "^5.9.10",
     "node-restful": "^0.2.6",
+    "nodemon": "^2.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-maps": "^9.4.5",

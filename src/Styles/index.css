@@ -7,7 +7,10 @@ input:focus, textarea:focus, select:focus, button:focus{
 }
 
 body {
+  background-color: #f6fbfb;
   margin: auto;
+  display: flex;
+  flex-direction: column;
   max-width: 100vw;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -22,20 +25,32 @@ code {
 }
 
 .btn {
-  border: 1px solid #f4f5f6;;
+  border: 1px solid #f4f5f6;
   background-color: rgba(0,0,0,0);
   padding: 10px 15px;
   border-radius: 5px;
   font-size: 15px;
   font-weight: 700;
   color: #f4f5f6;
+  cursor: pointer;
 }
 
 .btn:hover {
-  color: #fce38a;
-  border: 1px solid #fce38a;
+  transition: color 0.2s;
+  transition: border 0.2s;
+  color: white;
+  border: 1px solid white;
 }
 
-.btn-getstarted {
+.btn-classic {
+  background-color: #e96559;
+}
+
+.btn-classic:hover {
+  transition: background 0.2s;
+  background: #d95549;
+}
+
+.btn-success {
   background-color: #52cc65;
 }
