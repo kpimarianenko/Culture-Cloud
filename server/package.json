@@ -1,0 +1,22 @@
+{
+  "name": "culture-cloud-backend",
+  "version": "1.0.0",
+  "description": "back",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "busboy-body-parser": "^0.3.2",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.7-alpha.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.10",
+    "node-restful": "^0.2.6",
+    "nodemon": "^2.0.3"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import '../Styles/Home.css';
+import '../Styles/Slider.css';
 
 let timer;
 
-class Home extends Component {
+class Slider extends Component {
   componentDidMount() {
     const slider = {
       slides: document.querySelectorAll(".slide"),
@@ -56,38 +56,10 @@ class Home extends Component {
     return (
       <div id="main">
         <div className="slider">
-          <div className="slide slide-1 active">
-            <div className="container">
-              <div className="caption">
-                <h2>Vstavliu tut cho-to krasivoe i mb dlinnoe</h2>
-                <p>Lorem ipsum tudim siudim</p>
-              </div>
-            </div>
-          </div>
-          <div className="slide slide-2">
-            <div className="container">
-              <div className="caption">
-                <h2>Bla-bla-bla-bla-bla</h2>
-                <p>Lorem ipsum tudim siudim</p>
-              </div>
-            </div>
-          </div>
-          <div className="slide slide-3">
-            <div className="container">
-              <div className="caption">
-                <h2>i tut tozhe bla-bla-bla)00</h2>
-                <p>Lorem ipsum tudim siudim</p>
-              </div>
-            </div>
-          </div>
-          <div className="slide slide-4">
-            <div className="container">
-              <div className="caption">
-                <h2>Nu pozhalui i tut bla-bla-bla!</h2>
-                <p>Lorem ipsum tudim siudim</p>
-              </div>
-            </div>
-          </div>
+          <Slide title="Vstavliu tut cho-to krasivoe i mb dlinnoe" caption="Lorem ipsum tudim sudim" active index={1} />
+          <Slide title="Bla-bla-bla-bla-bla" caption="Lorem ipsum tudim sudim" index={2} />
+          <Slide title="i tut tozhe bla-bla-bla)00" caption="Lorem ipsum tudim sudim" index={3} />
+          <Slide title="Nu pozhalui i tut bla-bla-bla!" caption="Lorem ipsum tudim sudim" index={4} />
           <div className="controls">
             <div className="controls-inner">
               <img className="slider-control" src="/images/back.svg" alt="back arrow" id="prev" />
@@ -102,4 +74,16 @@ class Home extends Component {
   }
 }
 
-export default Home;
+function Slide(props) {
+  const { title, caption, index, active } = props;
+  return (<div className={`slide slide-${index} ${active ? 'active' : null}`}>
+      <div className="container">
+          <div className="caption">
+              <h2>{title}</h2>
+              <p>{caption}</p>
+          </div>
+      </div>
+  </div>)
+}
+
+export default Slider;

@@ -1,22 +1,22 @@
 const mongoose = require('mongoose');
 
 const UserSchema = {
-    login: { type: String, required: true },
-    fullname: { type: String, required: true },
+    email: { type: String, required: true },
+    name: { type: String, required: true },
     registeredAt: { type: Date, default: Date.now },
     avaUrl: { type: String },
     role: { type: Number, default: 0 },
-    passwordHash: { type: String, required: true },
+    passwordHash: { type: String },
     isDisabled: { type: Boolean, default: false }
 }
 
 const UserModel = mongoose.model('User', UserSchema);
 
 class User {
-    constructor(login, passwordHash, fullname, avaUrl) {
+    constructor(email, passwordHash, name, avaUrl) {
         this.passwordHash = passwordHash;
-        this.login = login;
-        this.fullname = fullname;
+        this.email = email;
+        this.name = name;
         this.role = 0;
         this.registeredAt = new Date();
         this.avaUrl = avaUrl;

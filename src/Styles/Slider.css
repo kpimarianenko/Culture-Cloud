@@ -67,7 +67,7 @@
     justify-content: center;
 }
 
-.caption {
+.slide .caption {
     font-family: 'Loto', sans-serif;
     font-weight: 700;
     text-shadow: 1px 1px 8px black;

@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { GoogleMap, withScriptjs, withGoogleMap, Marker } from "react-google-maps"
 import '../Styles/Contacts.css';
 import project from '../projectInfo';
+import { Logo } from './Utilities';
 
 function Map() {
     return (
@@ -11,66 +12,45 @@ function Map() {
     )
 }
 
-const WrappedMap = withScriptjs(withGoogleMap(Map))
-
-class Contacts extends Component {
-    render() {
-        return (
-            <div className="contacts">
-                <div className="contacts__wrapper">
-                    <h2 className="contact__header">{project.name}</h2>
-                    <div className="logo">
-                        <img src="/images/logo-black.png" alt="logo_bull"/>
-                    </div>
-                    <div className="social__networks">
-                        <div className="network">
-                            <div className="network__logo__outer">
-                                <img src="/images/gmail.png" alt="mail" className="network__logo" />
-                            </div>
-                            <h3 className="network__name">Email</h3>
-                            <a href={`mailto:${project.email}`}><p className="network__info">{project.email}</p></a>
-                        </div>
-                        <div className="network">
-                            <div className="network__logo__outer">
-                                <img src="/images/phone.png" alt="phone" className="network__logo" />
-                            </div>
-                            <h3 className="network__name">Phone</h3>
-                            <p className="network__info">{project.phone}</p>
-                        </div>
-                        <div className="network">
-                            <div className="network__logo__outer">
-                                <img src="/images/twitter.png" alt="twitter" className="network__logo" />
-                            </div>
-                            <h3 className="network__name">Twitter</h3>
-                            <a href="https://twitter.com"><p className="network__info">Follow us</p></a>
-                        </div>
-                        <div className="network">
-                            <div className="network__logo__outer">
-                                <img src="/images/skype.png" alt="skype" className="network__logo" />
-                            </div>
-                            <h3 className="network__name">Skype</h3>
-                            <p className="network__info">{project.skype}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="map__wrapper">
-                    <h2 className="contact__header">Find us</h2>
-                    <div className="map">
-                        <WrappedMap
-                            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyCtsEasWzAcjE9Byagh0D4dw5VpcGH8bNc`}
-                            loadingElement={<div className="map__element" />}
-                            containerElement={<div className="map__element" />}
-                            mapElement={<div className="map__element" />}
-                        />
-                    </div>
-                    <div className="address">
-                        <img src="/images/pin.png" alt="pin"/>
-                        <p>{project.address}</p>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+function SocialMedia(props) {
+    const { name, value, logoUrl, url } = props;
+    return (<div className="socmedia">
+        <div className="socmedia__logo__outer">
+            <img src={logoUrl} alt={name} className="socmedia__logo" />
+        </div>
+        <h3 className="socmedia__name">{name}</h3>
+        <a href={url}><p className="socmedia__info">{value}</p></a>
+    </div>)
 }
 
-export default Contacts
+
+export default function Contacts() {
+    const WrappedMap = withScriptjs(withGoogleMap(Map))
+    return (
+    <div className="contacts">
+        <div className="contacts__wrapper">
+            <Logo name={project.name} url="/images/logo-black.png" />
+            <div className="socmedias">
+                <SocialMedia name="Email" value={project.email} logoUrl="/images/gmail.png" url={`mailto:${project.email}`} />
+                <SocialMedia name="Phone" value={project.phone} logoUrl="/images/phone.png" />
+                <SocialMedia name="Twitter" value="Follow us" logoUrl="/images/twitter.png" url="https://twitter.com" />
+                <SocialMedia name="Skype" value={project.skype} logoUrl="/images/skype.png" url="https://skype.com" />
+            </div>
+        </div>
+        <div className="map__wrapper">
+            <h2>Find us</h2>
+            <div className="map">
+                <WrappedMap
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyCtsEasWzAcjE9Byagh0D4dw5VpcGH8bNc`}
+                    loadingElement={<div className="map__element" />}
+                    containerElement={<div className="map__element" />}
+                    mapElement={<div className="map__element" />}
+                />
+            </div>
+            <div className="address">
+                <img src="/images/pin.png" alt="pin"/>
+                <p>{project.address}</p>
+            </div>
+        </div>
+    </div>)
+}

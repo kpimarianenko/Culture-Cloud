@@ -49,10 +49,9 @@
 
 .authbtns {
     max-width: 100%;
-    margin: auto 0;
 }
 
-.authbtns > .btn {
+.authbtns > a {
     margin: auto 5px;
 }
 
