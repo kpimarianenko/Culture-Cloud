@@ -1,56 +1,44 @@
 import project from './projectInfo'
 
 export default class HTTP {
-    static get(url, onLoad, onFailure, onSuccess) {
-        var xhr = new XMLHttpRequest();
-
-        xhr.open('GET', url, true);
-
-        xhr.onload = onLoad;
-
-        xhr.onreadystatechange = function() {
-            if(xhr.readyState === 4 && xhr.status === 200) {
-                onSuccess(xhr.response)
-            }
-            else {
-                onFailure(xhr.response)
-            }
-        }
-
-        xhr.send();
-    }
-
-    static async post(url, formID) {
+    static async get(url) {
         const response = await fetch(url, {
-            method: 'POST', 
-            body: new FormData(document.getElementById(formID))
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
         });
         return await response.json();
     }
 
-    // static post(url, formID, onLoad, onFailure, onSuccess) {
-    //     var xhr = new XMLHttpRequest();
-    //     const formData = new FormData(document.getElementById(formID));
+    static async post(url, formID, formData) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: formData ? formData : new FormData(document.getElementById(formID))
+        });
+        return await response.json();
+    }
 
-    //     xhr.open('POST', url, true);
-
-    //     xhr.onload = onLoad;
-
-    //     xhr.onreadystatechange = function() {
-    //         if(xhr.readyState === 4 && xhr.status === 200) {
-    //             console.log(xhr.response)
-    //             onSuccess(xhr.response)
-    //         }
-    //         else {
-    //             onFailure(JSON.parse(xhr.response))
-    //         }
-
-    //     }
-        
-    //     xhr.send(formData);
-    // }
+    static registerByGoogle(formData) {
+        return this.post(`${project.dev.hostname}/api/v1/auth/register`, null, formData)
+    }
 
     static register(formID) {
         return this.post(`${project.dev.hostname}/api/v1/auth/register`, formID)
+    }
+
+    static loginByGoogle(formData) {
+        return this.post(`${project.dev.hostname}/api/v1/auth/login`, null, formData)
+    }
+
+    static login(formID) {
+        return this.post(`${project.dev.hostname}/api/v1/auth/login`, formID)
+    }
+
+    static getProfile() {
+        return this.get(`${project.dev.hostname}/api/v1/me`)
     }
 } 

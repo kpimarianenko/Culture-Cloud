@@ -2,7 +2,6 @@
     min-height: 100vh;
     display: grid;
     grid-template-columns: 400px 1fr;
-    text-align: center;
 }
 
 .auth__window {
@@ -23,6 +22,10 @@
 .auth h2 {
     margin-top: 10px;
     font-size: 40px;
+}
+
+input, select {
+    margin-bottom: 10px;
 }
 
 .auth .logo {
@@ -48,12 +51,8 @@
 .form-register {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 40px;
+    grid-column-gap: 20px;
 }
-
-/* .form-register input {
-    width: 100%;
-} */
 
 .or {
     width: 100%; 
@@ -83,6 +82,28 @@
     text-decoration: underline;
 }
 
-input {
-    margin-bottom: 10px;
+div.error {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.loader {
+  border-radius: 100%;
+  border-top: 4px solid #e96559;
+  border-left: 4px solid #e96559;
+  border-bottom: 4px solid #e96559;
+  border-right: 4px solid transparent;
+  width: 40px;
+  height: 40px;
+  margin: 20px auto;
+  animation: rotate 1.0s infinite;
+}
+
+.auth {
+    text-align: center;
+}
+
+.file {
+    width: 2fr;
+    padding: 0 auto;
 }

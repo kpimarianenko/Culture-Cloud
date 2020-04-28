@@ -1,4 +1,4 @@
-p, h1, h2, h3, h4, h5, h6 {
+small, p, h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
@@ -59,18 +59,31 @@ code {
   background-color: #52cc65;
 }
 
-input {
-  height: 30px;
+input, select {
+  height: 40px;
   border: none;
   border-radius: 5px;
   border: 1px solid #cfd2d7;
   font-family: 'Loto', sans-serif;
-  padding: 5px 10px;
   font-size: 18px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 5px 10px;
 }
 
 input::placeholder {
   color: #cfd2d7;
+}
+
+input.error {
+  box-shadow: 0 0 3px #e7757f;
+  border: 1px solid #e7757f;
+  color: black;
+}
+
+input.error::placeholder {
+  color: #f7858f;
 }
 
 .link {
@@ -80,41 +93,4 @@ input::placeholder {
 
 .link:hover {
   text-decoration: underline;
-}
-
-.loader {
-  border-radius: 100%;
-  border-top: 4px solid #e96559;
-  border-left: 4px solid #e96559;
-  border-bottom: 4px solid #e96559;
-  border-right: 4px solid transparent;
-  width: 40px;
-  height: 40px;
-  margin: 20px auto;
-  animation: rotate 1.0s infinite;
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.error {
-  font-weight: 700;
-  margin: 5px;
-  color: red;
-}
-
-.form__section > h4 {
-  text-align: left;
-  margin-bottom: 5px;
-  margin-left: 5px;
-}
-
-.form__section > input {
-  width: 100%;
 }

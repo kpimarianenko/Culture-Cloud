@@ -1,0 +1,30 @@
+.form__section {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form__section > h4 {
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+
+.form__section > input {
+  width: 100%;
+}
+
+.error {
+  color: #e7757f;
+  text-align: left;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

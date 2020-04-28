@@ -1,4 +1,5 @@
 import React from 'react'
+import '../Styles/Utils.css'
 
 export function Loader(props) {
     const { display } = props;
@@ -11,11 +12,19 @@ export function Error(props) {
 }
 
 export function FormSection(props) {
-    const { title, placeholder, name, type } = props;
+    const { title, message, ...attrs } = props;
     return (<div className="form__section">
         <h4>{title}</h4>
-        <input placeholder={placeholder} name={name} type={type} />
+        <ErrorInput message={message} {...attrs} />
     </div>)
+}
+
+export function ErrorInput(props) {
+    const {id, message, ...attrs } = props;
+    return ([
+        <small className="error" htmlFor={id}>{message}</small>,
+        <input {...attrs} className={message ? 'error' : null} />
+    ])
 }
 
 export function Logo(props) {

@@ -4,25 +4,18 @@ import '../Styles/Header.css';
 import { Link } from "react-router-dom";
 import project from '../projectInfo';
 
-// const curUser = undefined;
-// const curUser = {
-//     avaUrl: "https://cs16planet.ru/steam-avatars/images/avatar1833.jpg",
-//     email: "kpimarianenko@gmail.com",
-//     passwordHash: "tipa hash",
-//     name: "Roman Marianenko",
-//     role: 1
+// function ifUserIs(curUser, role, element) {
+//     if (curUser)
+//         if (curUser.role === role)
+//             return element;
 // }
-
-function ifUserIs(curUser, role, element) {
-    if (curUser)
-        if (curUser.role === role)
-            return element;
-}
 
 function Header(props) {
     const { logout } = useContext(Context);
-    const { curUser } = props;
-    return ( 
+
+    const { user } = props;
+
+    return (
       <div id="header">
           <div className="menu">
               <h1>{project.name}</h1>
@@ -36,17 +29,17 @@ function Header(props) {
               </div>
           </div>
           <div className="profile_info">
-              {(curUser) ? 
+              {(user) ? 
               (<span className="profile">
-                  <img className="ava" alt="User avatar" src={curUser.avaUrl}></img>
+                  <img className="ava" alt="User avatar" src={user.avaUrl || "/images/user-profile-ava.png"}></img>
                   <span className="name-wrapper">
-                      <p className="name">{curUser.name}</p>
+                      <p className="name">{user.name}</p>
                       <div className="dropdown-caret"></div>
                       <div className="dropdown-menu">
-                          {ifUserIs(curUser, 1, 
+                          {/* ifUserIs(, 1, 
                           <div className="dropdown-menu-element">
                               <Link to="/exhibits">Exhibits</Link>
-                          </div>)}
+                          </div>) */}
                           <div className="dropdown-menu-element">Profile</div>
                           <div className="dropdown-menu-element">Settings</div>
                           <div className="dropdown-menu-element" onClick={logout}>Log out</div>

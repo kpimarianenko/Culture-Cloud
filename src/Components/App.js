@@ -1,23 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import { BrowserRouter } from "react-router-dom";
 import Container from './Container';
 import { Context } from '../context'
+import HTTP from '../http'
 
-function App() {
+function App(props) {
     const [user, setUser] = useState();
 
     const logout = function() {
+      localStorage.setItem('token', null)
       setUser(null);
     }
 
+    const renderUser = function(user) {
+      setUser(user);
+    }
+
+    useEffect(() => {
+      HTTP.getProfile()
+      .then(authData => {
+        if (authData.status === 200)
+          setUser(authData.user);
+      })
+    }, [])
+
     return (
     <Context.Provider value={{
-      setUser, logout
+      renderUser, logout, user
     }}>
       <BrowserRouter>
-        <Header curUser={user} />
+        <Header user={user} />
         <Container/>
         <Footer />
       </BrowserRouter>

@@ -7,6 +7,7 @@ const UserSchema = {
     avaUrl: { type: String },
     role: { type: Number, default: 0 },
     passwordHash: { type: String },
+    googleId: { type: String },
     isDisabled: { type: Boolean, default: false }
 }
 
@@ -38,6 +39,22 @@ class User {
     static get(id) {
         return UserModel.findById(id);
     }
+
+    static getByEmail(email) {
+        return UserModel.findOne({email});
+    }
+
+    static getByGoogleId(googleId) {
+        return UserModel.findOne({googleId});
+    }
+
+    static getByEmailAndPasswordHash(email, passwordHash) {
+        return UserModel.findOne({email: email, passwordHash: passwordHash});
+    }
+
+    // Assuming you don't want duplicates, you can directly get an array of the unique regId values in the collection using distinct:
+    // Device.distinct('regId', function(err, regIdsArray) {...});
+
 }
 
 module.exports = User;
