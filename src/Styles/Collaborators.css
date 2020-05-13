@@ -42,7 +42,7 @@
     object-fit: cover;
 }
 
-.button__outer > button {
+.button__outer > * {
     margin-top: 10px;
     float: right;
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
 import '../Styles/Collaborators.css';
 import HTTP from '../http'
 
@@ -10,6 +11,8 @@ export default function Collaborators() {
         .then(collabs => {
             const collaboratorsComponents = collabs.map(collaborator => 
                 <Collaborator 
+                id={collaborator._id}
+                key={collaborator._id}
                 avaUrl={collaborator.avaUrl || "/images/museum-placeholder.jpg"}
                 name={collaborator.placeName}
                 type={collaborator.type}
@@ -20,7 +23,7 @@ export default function Collaborators() {
     }, []);
 
     return (
-        <div class="main">
+        <div className="main">
             <div>
                 <form className="filters">
                     <h2>Filters</h2>
@@ -73,7 +76,7 @@ export default function Collaborators() {
 }
 
 function Collaborator(props) {
-    const { avaUrl, name, type, about } = props;
+    const { avaUrl, name, type, about, id } = props;
     return (<div className="collaborator">
     <img className="collaborator__ava" src={avaUrl} alt=""/>
     <div className="collaborator__info">
@@ -83,7 +86,7 @@ function Collaborator(props) {
             <p className="collaborator__about">{about}</p>
         </div>
         <div className="button__outer">
-            <button className="btn btn-classic" to="/visit">Visit</button>
+            <Link to={`/collaborators/${id}`}><button className="btn btn-classic">Visit</button></Link>
         </div>
     </div>
 </div>)

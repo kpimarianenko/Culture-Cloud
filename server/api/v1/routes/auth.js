@@ -9,7 +9,7 @@ const User = require('../../../models/users');
 router.post('/login', function(req, res){
     const jwtSign = user => {
         if (user) 
-        jwt.sign({user}, config.secret, { expiresIn: "10s" },function(err, token){
+        jwt.sign({user}, config.secret, { expiresIn: "10h" },function(err, token){
             if (err) res.json(err)
             else res.status(200).json({
                 status: 200,
