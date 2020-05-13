@@ -53,7 +53,7 @@ export default function Login() {
           history.push('/')
         }
       })
-      .catch(err => setErrorMessage(err))
+      .catch(err => setErrorMessage(err.toString()))
     }
 
     const failureResponseGoogle = function(response) {
@@ -75,6 +75,7 @@ export default function Login() {
         loginFormData.append("email", response.profileObj.email);
 
         return HTTP.loginByGoogle(loginFormData)
+        })
         .then(tokenData => {
           localStorage.setItem('token', tokenData.token)
           return HTTP.getProfile()
@@ -83,8 +84,7 @@ export default function Login() {
           renderUser(authData.user)
           history.push('/')
         })
-        .catch(err => setErrorMessage(err))
-      })
+        .catch(err => setErrorMessage(err.toString()))
     }
 
     const handleInput = function(){

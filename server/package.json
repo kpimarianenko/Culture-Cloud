@@ -10,6 +10,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "busboy-body-parser": "^0.3.2",
+    "cloudinary": "^1.21.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",

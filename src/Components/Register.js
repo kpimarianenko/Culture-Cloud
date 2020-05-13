@@ -59,13 +59,18 @@ export default function Register() {
             number: true,
             length: 3,
           },
-          placename: {
+          placeName: {
             required: true,
             max: 64,
           },
           city: {
             required: true,
             max: 64,
+          },
+          about: {
+            required: true,
+            min: 20,
+            max: 250,
           }
         }
       })
@@ -75,7 +80,6 @@ export default function Register() {
       setFormErrors(response.error)
       return response.formValid;
     }
-
 
     const changeType = function() {
         setDisplayCardInputs(!displayCardInputs);
@@ -92,9 +96,9 @@ export default function Register() {
             .then(response => {
                 if (response.status !== 200) setErrorMessage(response.message)
                 else history.push('/auth/login')
-                setDisplayLoader(false)
             })
-            .catch(err => setErrorMessage(err))
+            .catch(err => setErrorMessage(err.toString()))
+            .finally(() => setDisplayLoader(false))
         }
     }
 
@@ -112,10 +116,11 @@ export default function Register() {
                         <FormSection message={formErrors.lastname} onChange={handleInput} title="Last name" placeholder="Enter last name" name="lastname" />
                         <FormSection message={formErrors.password} onChange={handleInput} title="Password" placeholder="Enter password" name="password" type="password" />
                         <FormSection message={formErrors.repeatPassword} onChange={handleInput} title="Repeat password" placeholder="Repeat password" name="repeatPassword" type="password" />
-                        <CardInputs messages={[formErrors.placename, formErrors.city, formErrors.cardNumber, formErrors.expDate, formErrors.cvv]} handleInput={handleInput} display={displayCardInputs} />
+                        <CardInputs messages={[formErrors.placeName, formErrors.city, formErrors.cardNumber, formErrors.expDate, formErrors.cvv]} handleInput={handleInput} display={displayCardInputs} />
                         <FormSection onChange={handleInput} title="Choose avatar (optional)" name="avatar" type="file" />
                     </div>
                 </form>
+                <FormSection message={formErrors.about} onChange={handleInput} title="About" placeholder="Enter information about your institution" name="about" form="register" textarea />
                 <Error message={errorMessage}/>
                 <button style={{ display: displayLoader ? 'none' : 'inline-block' }} type="submit" form="register" className="btn btn-classic">{buttonText}</button>
                 <Loader display={displayLoader} />
@@ -128,17 +133,17 @@ function CardInputs(props) {
     const {display, handleInput, messages} = props;
     if (display)
     return ([
-        <FormSection message={messages[0]} onChange={handleInput} title="Place name" placeholder="Enter place name" name="placename" />,
-        <FormSection message={messages[1]} onChange={handleInput} title="City" placeholder="Enter city" name="city" />,
-        <FormSection message={messages[2]} onChange={handleInput} title="Card number" placeholder="Enter card number" name="cardNumber" />,
-        <FormSection message={messages[3]} onChange={handleInput} title="Expiration date" placeholder="Enter expiration date (MM/YY)" name="expDate" />,
-        <FormSection message={messages[4]} onChange={handleInput} title="Security code" placeholder="Enter security code (CVV)" name="cvv" />,
-        <div className="form__section">
+        <FormSection key={1} message={messages[0]} onChange={handleInput} title="Place name" placeholder="Enter place name" name="placeName" />,
+        <FormSection key={2} message={messages[1]} onChange={handleInput} title="City" placeholder="Enter city" name="city" />,
+        <FormSection key={3} message={messages[2]} onChange={handleInput} title="Card number" placeholder="Enter card number" name="cardNumber" />,
+        <FormSection key={4} message={messages[3]} onChange={handleInput} title="Expiration date" placeholder="Enter expiration date (MM/YY)" name="expDate" />,
+        <FormSection key={5} message={messages[4]} onChange={handleInput} title="Security code" placeholder="Enter security code (CVV)" name="cvv" />,
+        <div key={6} className="form__section">
             <h4>Type</h4>
             <select name="type">
-                <option value="museum">Museum</option>
-                <option value="gallery">Gallery</option>
-                <option value="exhibition">Exhibition</option>
+                <option value="Museum">Museum</option>
+                <option value="Gallery">Gallery</option>
+                <option value="Exhibition">Exhibition</option>
             </select>
         </div>
     ])

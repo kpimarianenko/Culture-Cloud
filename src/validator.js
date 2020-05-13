@@ -17,7 +17,7 @@ export default class FormValidator {
     }
 
     static validateField(name) {
-        const target = document.querySelector(`input[name="${name}"]`);
+        const target = document.querySelector(`[name="${name}"]`);
         if (!target) return;
         const value = target.value;
         const field = this.fields[name.toString()];

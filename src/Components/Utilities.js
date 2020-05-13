@@ -20,19 +20,25 @@ export function FormSection(props) {
 }
 
 export function ErrorInput(props) {
-    const {id, message, ...attrs } = props;
-    return ([
-        <small className="error" htmlFor={id}>{message}</small>,
-        <input {...attrs} className={message ? 'error' : null} />
-    ])
+    const {id, textarea, message, value, ...attrs } = props;
+    return (
+    <div>
+        <small className="error" htmlFor={id}>{message}</small>
+        {   
+            textarea ? 
+            <textarea {...attrs } className={message ? 'error' : null} >{value}</textarea> :
+            <input {...attrs} value={value} className={message ? 'error' : null} />
+        }
+    </div>)
 }
 
 export function Logo(props) {
     const { name, url } = props;
-    return ([
-    <h2>{name}</h2>,
-    <div className="logo">
-        <img src={url} alt="logo"/>
-    </div>
-    ])
+    return (
+    <div>
+        <h2>{name}</h2>
+        <div className="logo">
+            <img src={url} alt="logo"/>
+        </div>
+    </div>)
 }

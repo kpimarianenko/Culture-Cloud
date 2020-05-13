@@ -8,7 +8,14 @@ const UserSchema = {
     role: { type: Number, default: 0 },
     passwordHash: { type: String },
     googleId: { type: String },
-    isDisabled: { type: Boolean, default: false }
+    isDisabled: { type: Boolean, default: false },
+    cardNumber: { type: String },
+    about: { type: String },
+    type: { type: String },
+    city: { type: String },
+    expDate: { type: String },
+    placeName: { type: String },
+    cvv: { type: Number },
 }
 
 const UserModel = mongoose.model('User', UserSchema);
@@ -18,7 +25,6 @@ class User {
         this.passwordHash = passwordHash;
         this.email = email;
         this.name = name;
-        this.role = 0;
         this.registeredAt = new Date();
         this.avaUrl = avaUrl;
         this.isDisabled = false;
@@ -57,4 +63,39 @@ class User {
 
 }
 
+class Collaborator extends User {
+    constructor(email, passwordHash, name, placeName, city, cardNumber, cvv, expDate, type, about, avaUrl) {
+        super(email, passwordHash, name, avaUrl);
+        this.expDate = expDate
+        this.role = 1;
+        this.placeName = placeName;
+        this.cardNumber = cardNumber;
+        this.cvv = cvv;
+        this.type = type;
+        this.city = city;
+        this.about = about;
+    }
+
+    static get(id) {
+        return UserModel.findOne({_id: id, role: 1});
+    }
+
+    static getAll() {
+        return UserModel.find({role: 1});
+    }
+
+    static delete(id) {
+        return UserModel.deleteOne({ _id: id, role: 1});
+    }
+
+    static add(collaborator) {
+        return new UserModel(collaborator).save();
+    }
+
+    static update(user) {
+        return UserModel.findOneAndUpdate({_id: user.id}, user);
+    }
+}
+
 module.exports = User;
+module.exports.Collaborator = Collaborator;

@@ -41,4 +41,8 @@ export default class HTTP {
     static getProfile() {
         return this.get(`${project.dev.hostname}/api/v1/me`)
     }
+
+    static getCollaborators() {
+        return this.get(`${project.dev.hostname}/api/v1/collaborators`)
+    }
 } 

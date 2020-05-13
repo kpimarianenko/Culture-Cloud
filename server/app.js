@@ -6,15 +6,22 @@ const fileUpload = require('express-fileupload');
 const app = express();
 const mongoose = restful.mongoose;
 const config = require('./config');
-
-const url = config.mongodb.url;
-const port = config.mongodb.port;
-const connectOptions = { useNewUrlParser: true, useUnifiedTopology: true }
+const cloudinary = require('cloudinary');
 
 app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(busBoyBodyParser({ limit: '15mb' }));
+
+cloudinary.config({
+    cloud_name: config.cloudinary.cloud_name,
+    api_key: config.cloudinary.api_key,
+    api_secret: config.cloudinary.api_secret
+});
+
+const url = config.mongodb.url;
+const port = config.mongodb.port;
+const connectOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 
 mongoose.connect(url, connectOptions)
 .then(() => console.log(`Database connected`))

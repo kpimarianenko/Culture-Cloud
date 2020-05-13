@@ -5,6 +5,7 @@
 }
 
 .auth__window {
+    padding: 30px;
     background-color: white;
 }
 
@@ -20,7 +21,6 @@
 }
 
 .auth h2 {
-    margin-top: 10px;
     font-size: 40px;
 }
 
@@ -39,11 +39,8 @@ input, select {
     height: 100%;
 }
 
-.form {
-    margin: 30px 30px 0 30px;
-}
-
 .form-login {
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
 }
@@ -106,4 +103,14 @@ div.error {
 .file {
     width: 2fr;
     padding: 0 auto;
+}
+
+textarea {
+    resize: vertical;
+    width: 100%;
+    min-height: 60px;
+}
+
+input {
+    width: 100%;
 }
