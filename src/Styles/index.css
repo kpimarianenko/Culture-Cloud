@@ -10,6 +10,13 @@ input:focus, textarea:focus, select:focus, button:focus{
   outline: none;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+
 body {
   background-color: #f6fbfb;
   margin: auto;

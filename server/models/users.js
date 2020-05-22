@@ -84,6 +84,10 @@ class Collaborator extends User {
         return UserModel.find({role: 1});
     }
 
+    static getPage(page, quantity) {
+        return UserModel.find({role: 1}).skip((page - 1) * quantity).limit(quantity);;
+    }
+
     static delete(id) {
         return UserModel.deleteOne({ _id: id, role: 1});
     }

@@ -17,7 +17,7 @@ export default function Register() {
     const [displayLoader, setDisplayLoader] = useState(false)
     const [changeTypeText, setChangeTypeText] = useState(simpleUserText)
     const [buttonText, setButtonText] = useState(simpleUserButtonText)
-    const [formErrors, setFormErrors] = useState("");
+    const [formErrors, setFormErrors] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
 
     const validate = FormValidator.setOptions({
@@ -70,7 +70,7 @@ export default function Register() {
           about: {
             required: true,
             min: 20,
-            max: 250,
+            max: 750,
           }
         }
       })

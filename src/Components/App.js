@@ -31,8 +31,10 @@ function App(props) {
       renderUser, logout, user
     }}>
       <BrowserRouter>
-        <Header user={user} />
-        <Container/>
+        <div>
+          <Header user={user} />
+          <Container/>
+        </div>
         <Footer />
       </BrowserRouter>
     </Context.Provider>)

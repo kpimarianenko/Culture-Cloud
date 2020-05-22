@@ -1,0 +1,72 @@
+.collaborator-page {
+    margin: 20px;
+    padding: 20px;
+}
+
+.collaborator-page .ava {
+    margin-right: 20px;
+    object-fit: cover;
+    box-shadow: none;
+    height: 400px;
+    width: 400px;
+}
+
+.collaborator-page .info {
+    display: flex;
+    flex-direction: row;
+}
+
+.collaborator-page .details {
+    width: 100%;
+}
+
+.collaborator-page .details > *{
+    margin-bottom: 10px;
+}
+
+/* .collaborator-page .about {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 7px;
+    padding: 15px;
+    border: 2px solid gainsboro;
+    background-color: whitesmoke;
+} */
+
+.collaborator-page .name {
+    text-align: left;
+}
+
+.collaborator-page .type {
+    color: gray;
+}
+
+.collaborator-page .excursions {
+    background-color: gainsboro;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.excursions .name {
+    width: 100%;
+}
+
+.excursions th{
+    text-align: left;
+    background-color: #e3f2ef;
+    padding: 10px;
+}
+
+.excursions tr {
+    background-color: white;
+}
+
+.excursions td {
+    padding: 10px;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: black;
+}

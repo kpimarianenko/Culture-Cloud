@@ -1,31 +1,54 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
+import { Pagination } from "./Utilities"
 import '../Styles/Collaborators.css';
 import HTTP from '../http'
 
 export default function Collaborators() {
     const [collaborators, setCollaborators] = useState([]);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
-        HTTP.getCollaborators()
+        HTTP.getCollaborators(page)
         .then(collabs => {
-            const collaboratorsComponents = collabs.map(collaborator => 
-                <Collaborator 
-                id={collaborator._id}
-                key={collaborator._id}
-                avaUrl={collaborator.avaUrl || "/images/museum-placeholder.jpg"}
-                name={collaborator.placeName}
-                type={collaborator.type}
-                about={collaborator.about} />)
+            const collaboratorsComponents = mapCollaborators(collabs)
             setCollaborators(collaboratorsComponents)
         })
         .catch(err => {/*@TODO ERROR*/})
     }, []);
 
+    const mapCollaborators = (collabs) => {
+        return collabs.map(collaborator => 
+            <Collaborator 
+            id={collaborator._id}
+            key={collaborator._id}
+            avaUrl={collaborator.avaUrl}
+            name={collaborator.placeName}
+            type={collaborator.type}
+            about={collaborator.about} />)
+    }
+
+    useEffect(() => {
+        HTTP.getCollaborators(page)
+        .then(collabs => {
+            const collaboratorsComponents = mapCollaborators(collabs)
+            setCollaborators(collaboratorsComponents)
+        })
+        .catch(err => {/*@TODO ERROR*/})
+    }, [page]);
+
+    const onPrev = () => {
+        setPage(page-1)
+    }
+
+    const onNext = () => {
+        setPage(page+1)
+    }
+
     return (
         <div className="main">
             <div>
-                <form className="filters">
+                <form className="filters card">
                     <h2>Filters</h2>
                     <div className="filters__section">
                         <h3 className="filters__section__header">Type</h3>
@@ -70,15 +93,17 @@ export default function Collaborators() {
             </div>
 
 
-            <CollaboratorsList collaborators={collaborators} />
+            <CollaboratorsList collaborators={collaborators}>
+                <Pagination page={page} onPrev={onPrev} onNext={onNext} />
+            </CollaboratorsList>
         </div>
     )
 }
 
 function Collaborator(props) {
     const { avaUrl, name, type, about, id } = props;
-    return (<div className="collaborator">
-    <img className="collaborator__ava" src={avaUrl} alt=""/>
+    return (<div className="collaborator card">
+    <img className="collaborator__ava" src={avaUrl || "/images/museum-placeholder.jpg"} alt=""/>
     <div className="collaborator__info">
         <div className="collaborator_text">
             <h3 className="collaborator__name">{name}</h3>
@@ -93,10 +118,11 @@ function Collaborator(props) {
 }
 
 function CollaboratorsList(props) {
-    const { collaborators } = props;
+    const { collaborators, children } = props;
     return(
         <div className="collaborators">
             {collaborators}
+            {children}
         </div>
     )
 }

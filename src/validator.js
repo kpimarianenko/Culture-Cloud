@@ -34,7 +34,7 @@ export default class FormValidator {
             }
         }
         if (field.max) {
-            if (value.length < field.min) {
+            if (value.length > field.max) {
                 let error = this.errors[name.toString()] ? this.errors[name.toString()].max : null;
                 return error || `${this.classicError.max} ${field.max}`;
             }

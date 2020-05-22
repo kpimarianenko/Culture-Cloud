@@ -42,7 +42,11 @@ export default class HTTP {
         return this.get(`${project.dev.hostname}/api/v1/me`)
     }
 
-    static getCollaborators() {
-        return this.get(`${project.dev.hostname}/api/v1/collaborators`)
+    static getCollaborators(page) {
+        return this.get(`${project.dev.hostname}/api/v1/collaborators?page=${page}`)
+    }
+
+    static getCollaborator(id) {
+        return this.get(`${project.dev.hostname}/api/v1/collaborators/${id}`)
     }
 } 

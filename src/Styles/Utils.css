@@ -28,3 +28,42 @@
   }
 }
 
+.pagination, .pagination-wrapper {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.pagination-wrapper {
+  justify-content: space-around;
+}
+
+.pagination-element {
+  padding: 5px;
+  border: 2px solid #e96559;
+  color: #e96559;
+  border-right: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.pagination-element:last-child {
+  border-right: 2px solid #e96559;
+}
+
+.pagination-element.next {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.pagination-element.prev {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination-element.prev:hover, .pagination-element.next:hover {
+  background-color: #e96559;
+  color: white;
+  transition: background-color 0.1s;
+  transition: color 0.1s;
+}

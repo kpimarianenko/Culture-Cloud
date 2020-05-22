@@ -12,11 +12,8 @@
 }
 
 .collaborator {
-    background-color: white;
+    min-height: 180px;
     overflow: hidden;
-    border-radius: 7px;
-    border-bottom: 3px solid #e96559;
-    box-shadow: 0 0 10px 1px #aaaaaa;
     display: flex;
     flex-direction: row;
 }
@@ -47,12 +44,15 @@
     float: right;
 }
 
-.filters {
-    padding: 10px;
+.card {
     background-color: white;
     border-radius: 7px;
     border-bottom: 3px solid #e96559;
     box-shadow: 0 0 10px 1px #aaaaaa;
+}
+
+.filters {
+    padding: 10px;
 }
 
 .filters .btn {
