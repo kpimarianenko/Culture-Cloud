@@ -49,4 +49,8 @@ export default class HTTP {
     static getCollaborator(id) {
         return this.get(`${project.dev.hostname}/api/v1/collaborators/${id}`)
     }
+
+    static addExcursion(formID) {
+        return this.post(`${project.dev.hostname}/api/v1/excursions`, formID)
+    }
 } 

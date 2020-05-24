@@ -43,7 +43,6 @@
 
 .collaborator-page .excursions {
     background-color: gainsboro;
-    margin-bottom: 20px;
     width: 100%;
 }
 
@@ -70,3 +69,41 @@
     height: 1px;
     background-color: black;
 }
+
+.btn-add_excursion {
+    cursor: pointer;
+    text-align: center;
+    color: #dfdfdf;
+    line-height: unset;
+    vertical-align: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1.5px solid #dfdfdf;
+    border-top: 0;
+}
+
+.btn-add_excursion:hover {
+    color: black;
+}
+
+.photo {
+    text-align: center;
+}
+
+.gallery-link {
+    font-size: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #7070bf;
+}
+
+.gallery-link:hover {
+    /* text-decoration: none; */
+    transition: color 0.3s;
+    color: #40408f;
+}
+
+.pagination {
+    margin-top: 10px;
+}
+

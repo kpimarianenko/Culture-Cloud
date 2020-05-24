@@ -28,7 +28,10 @@ router.get('/me', utils.verifyToken, function(req, res){
 const authRouter = require('./routes/auth');
 router.use('/auth', authRouter);
 
-const collabRouter = require('./routes/collaborators');
-router.use('/collaborators', collabRouter);
+const collaboratorsRouter = require('./routes/collaborators');
+router.use('/collaborators', collaboratorsRouter);
+
+const excursionsRouter = require('./routes/excursions');
+router.use('/excursions', excursionsRouter);
 
 module.exports = router;

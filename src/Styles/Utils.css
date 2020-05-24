@@ -51,17 +51,17 @@
   border-right: 2px solid #e96559;
 }
 
-.pagination-element.next {
+.pagination-element:last-child {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
-.pagination-element.prev {
+.pagination-element:first-child {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
-.pagination-element.prev:hover, .pagination-element.next:hover {
+.pagination-element.controls-btn:hover, .pagination-element.controls-btn:hover {
   background-color: #e96559;
   color: white;
   transition: background-color 0.1s;

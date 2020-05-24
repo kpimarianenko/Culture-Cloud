@@ -4,7 +4,8 @@ export default class FormValidator {
         length: 'Field must contains this number of characters:',
         cardExpDate: 'Date must be in format (MM/YY)',
         email: 'Incorrect email',
-        number: 'This field can contains numbers only',
+        int: 'This field can contains integer numbers only',
+        float: 'This field can contains float numbers only',
         match: "Passwords doesn't match",
         min: 'Field must contains at least this number of characters:',
         max: 'Field must contains not more than this number of characters:',
@@ -57,10 +58,16 @@ export default class FormValidator {
                 return error || this.classicError.cardExpDate;
             }
         }
-        if (field.number) {
+        if (field.int) {
             if (!value.match(/^[0-9]*$/)) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].number : null;
-                return error || this.classicError.number;
+                let error = this.errors[name.toString()] ? this.errors[name.toString()].int : null;
+                return error || this.classicError.int;
+            }
+        }
+        if (field.float) {
+            if (!value.match(/^\d*\.?\d*$/)) {
+                let error = this.errors[name.toString()] ? this.errors[name.toString()].float : null;
+                return error || this.classicError.float;
             }
         }
         if (field.match) {

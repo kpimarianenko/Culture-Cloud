@@ -4,9 +4,13 @@ const utils = require('../../../utils');
 const Collaborator = require('../../../models/users').Collaborator;
 
 router.get('/', function(req, res){
-    Collaborator.getPage(req.query.page || 1, 5)
-    .then(users => {
-        res.json(users);
+    let quantity = 5;
+    Promise.all([Collaborator.getPage(req.query.page || 1, quantity), Collaborator.getCount()]) 
+    .then(response => {
+        res.json({
+            collaborators: response[0],
+            maxPage: Math.ceil(response[1] / quantity)
+        });
     })
     .catch(utils.serverError(res))
 })

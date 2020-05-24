@@ -18,6 +18,11 @@ function App(props) {
       setUser(user);
     }
 
+    const isUserRole = (role) => {
+      if (!user) return false;
+      return user.role === role;
+    }
+
     useEffect(() => {
       HTTP.getProfile()
       .then(authData => {
@@ -26,14 +31,15 @@ function App(props) {
       })
     }, [])
 
+
     return (
     <Context.Provider value={{
-      renderUser, logout, user
+      renderUser, logout, isUserRole, user
     }}>
       <BrowserRouter>
         <div>
           <Header user={user} />
-          <Container/>
+          <Container user={user} />
         </div>
         <Footer />
       </BrowserRouter>

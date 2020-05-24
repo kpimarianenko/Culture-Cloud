@@ -109,7 +109,7 @@ export default function Login() {
                 <ErrorInput message={formErrors.email} onChange={handleInput} name="email" placeholder="Enter email" id="email" />
                 <ErrorInput message={formErrors.password} onChange={handleInput} name="password" type="password" placeholder="Enter a password" id="password" />
                 <Error message={errorMessage} />
-                <button className="btn btn-classic" type="submit">Login by email</button>
+                <button className="btn btn-white btn-classic" type="submit">Login by email</button>
                 <div className="caption">Don't have an account? <Link to="/auth/register">Sign up!</Link></div>
               </form>
             </div>

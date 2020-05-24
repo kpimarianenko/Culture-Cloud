@@ -7,42 +7,27 @@ import HTTP from '../http'
 export default function Collaborators() {
     const [collaborators, setCollaborators] = useState();
     const [page, setPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(1);
 
-    useEffect(() => {
+    const renderCollaborators = () =>  {
+        setCollaborators(null)
         HTTP.getCollaborators(page)
-        .then(collabs => {
-            const collaboratorsComponents = mapCollaborators(collabs)
-            setCollaborators(collaboratorsComponents)
+        .then(response => {
+            setMaxPage(response.maxPage)
+            setCollaborators(response.collaborators)
         })
         .catch(err => {/*@TODO ERROR*/})
-    }, []);
-
-    const mapCollaborators = (collabs) => {
-        return collabs.map(collaborator => 
-            <Collaborator 
-            id={collaborator._id}
-            key={collaborator._id}
-            avaUrl={collaborator.avaUrl}
-            name={collaborator.placeName}
-            type={collaborator.type}
-            about={collaborator.about} />)
     }
 
-    useEffect(() => {
-        HTTP.getCollaborators(page)
-        .then(collabs => {
-            const collaboratorsComponents = mapCollaborators(collabs)
-            setCollaborators(collaboratorsComponents)
-        })
-        .catch(err => {/*@TODO ERROR*/})
-    }, [page]);
+    useEffect(renderCollaborators, []);
+    useEffect(renderCollaborators, [page]);
 
     const onPrev = () => {
-        setPage(page-1)
+        setPage(page - 1)
     }
 
     const onNext = () => {
-        setPage(page+1)
+        setPage(page + 1)
     }
 
     return collaborators ? (
@@ -93,7 +78,7 @@ export default function Collaborators() {
             </div>
 
             <CollaboratorsList collaborators={collaborators}>
-                <Pagination page={page} onPrev={onPrev} onNext={onNext} />
+                <Pagination page={page} maxPage={maxPage} onPrev={onPrev} onNext={onNext} />
             </CollaboratorsList>
         </div>
     ) : <Loader display />
@@ -110,7 +95,7 @@ function Collaborator(props) {
             <p className="collaborator__about">{about}</p>
         </div>
         <div className="button__outer">
-            <Link to={`/collaborators/${id}`}><button className="btn btn-classic">Visit</button></Link>
+            <Link to={`/collaborators/${id}`}><button className="btn btn-white btn-classic">Visit</button></Link>
         </div>
     </div>
 </div>)
@@ -118,9 +103,26 @@ function Collaborator(props) {
 
 function CollaboratorsList(props) {
     const { collaborators, children } = props;
-    return(
+    const [collaboratorsComponents, setCollaboratorsComponents] = useState(null)
+
+    const mapCollaborators = (collabs) => {
+        return collabs.map(collaborator => 
+            <Collaborator 
+            id={collaborator._id}
+            key={collaborator._id}
+            avaUrl={collaborator.avaUrl}
+            name={collaborator.placeName}
+            type={collaborator.type}
+            about={collaborator.about} />)
+    }
+
+    useEffect(() => {
+        setCollaboratorsComponents(mapCollaborators(collaborators))
+    }, [])
+
+    return (
         <div className="collaborators">
-            {collaborators}
+            {collaboratorsComponents}
             {children}
         </div>
     )

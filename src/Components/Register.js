@@ -48,7 +48,7 @@ export default function Register() {
           cardNumber: {
             length: 16,
             required: true,
-            number: true,
+            int: true,
           },
           expDate: {
             cardExpDate: true,
@@ -56,7 +56,7 @@ export default function Register() {
           },
           cvv: {
             required: true,
-            number: true,
+            int: true,
             length: 3,
           },
           placeName: {
@@ -122,7 +122,7 @@ export default function Register() {
                 </form>
                 <FormSection message={formErrors.about} onChange={handleInput} title="About" placeholder="Enter information about your institution" name="about" form="register" textarea />
                 <Error message={errorMessage}/>
-                <button style={{ display: displayLoader ? 'none' : 'inline-block' }} type="submit" form="register" className="btn btn-classic">{buttonText}</button>
+                <button style={{ display: displayLoader ? 'none' : 'inline-block' }} type="submit" form="register" className="btn btn-white btn-classic">{buttonText}</button>
                 <Loader display={displayLoader} />
             </div>
         </div>

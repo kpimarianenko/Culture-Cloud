@@ -36,22 +36,33 @@ code {
 }
 
 .btn {
-  border: 1px solid #f4f5f6;
   background-color: rgba(0,0,0,0);
   padding: 10px 15px;
   border-radius: 5px;
   font-size: 15px;
   font-weight: 700;
-  color: #f4f5f6;
   cursor: pointer;
+  color: #333333;
+  border: 1px solid #333333;
 }
 
 .btn:hover {
   transition: color 0.2s;
   transition: border 0.2s;
+  color: black;
+  border: 1px solid black;
+}
+
+.btn-white {
+  border: 1px solid #f4f5f6;
+  color: #f4f5f6;
+}
+
+.btn-white:hover {
   color: white;
   border: 1px solid white;
 }
+
 
 .btn-classic {
   background-color: #e96559;

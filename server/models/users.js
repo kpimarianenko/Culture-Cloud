@@ -84,6 +84,10 @@ class Collaborator extends User {
         return UserModel.find({role: 1});
     }
 
+    static getCount() {
+        return UserModel.find({role: 1}).countDocuments();
+    }
+
     static getPage(page, quantity) {
         return UserModel.find({role: 1}).skip((page - 1) * quantity).limit(quantity);;
     }

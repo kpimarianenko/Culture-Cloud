@@ -47,9 +47,14 @@ export function Pagination(props) {
     const { page, onPrev, onNext, maxPage } = props;
     return (<div className="pagination-wrapper">
         <div className="pagination">
-            <div onClick={onPrev} className="pagination-element prev">Prev</div>
+            {page === 1 ? null : <div onClick={onPrev} className="pagination-element controls-btn">Prev</div>}
             <div className="pagination-element">{page}</div>
-            <div onClick={onNext} className="pagination-element next">Next</div>
+            {page === maxPage ? null : <div onClick={onNext} className="pagination-element controls-btn">Next</div>}
         </div>
     </div>)
+}
+
+function PaginationButton(props) {
+    const { children, ...attrs } = props;
+    return (<div {...attrs} >{children}</div>)
 }

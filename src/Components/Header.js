@@ -4,16 +4,8 @@ import '../Styles/Header.css';
 import { Link } from "react-router-dom";
 import project from '../projectInfo';
 
-// function ifUserIs(curUser, role, element) {
-//     if (curUser)
-//         if (curUser.role === role)
-//             return element;
-// }
-
 function Header(props) {
-    const { logout } = useContext(Context);
-
-    const { user } = props;
+    const { logout, isUserRole, user } = useContext(Context);
 
     return (
       <div id="header">
@@ -36,19 +28,15 @@ function Header(props) {
                       <p className="name">{user.name}</p>
                       <div className="dropdown-caret"></div>
                       <div className="dropdown-menu">
-                          {/* ifUserIs(, 1, 
-                          <div className="dropdown-menu-element">
-                              <Link to="/exhibits">Exhibits</Link>
-                          </div>) */}
-                          <div className="dropdown-menu-element">Profile</div>
+                          <Link to={isUserRole(1) ? `/collaborators/${user._id}` : "/me"} className="dropdown-menu-element">Profile</Link>
                           <div className="dropdown-menu-element">Settings</div>
                           <div className="dropdown-menu-element" onClick={logout}>Log out</div>
                       </div>
                   </span>
               </span>) : 
               (<span className="authbtns">
-                  <Link to="/auth/login"><button className="btn">Sign in</button></Link>
-                  <Link to="/auth/register"><button className="btn btn-classic">Get started</button></Link>
+                  <Link to="/auth/login"><button className="btn btn-white">Sign in</button></Link>
+                  <Link to="/auth/register"><button className="btn btn-white btn-classic">Get started</button></Link>
               </span>)}
           </div>
       </div>
