@@ -1,82 +1,63 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import '../Styles/Slider.css';
+import { useEffect } from 'react';
 
-let timer;
+export default function Slider(props) {
+  const [slider, setSlider] = useState({})
 
-class Slider extends Component {
-  componentDidMount() {
-    const slider = {
+  useEffect(() => {
+    const slider_ = {
       slides: document.querySelectorAll(".slide"),
       prev_: document.getElementById("prev"),
       next_: document.getElementById("next"),
-      createCircles: function() {
-        for (let i = 0; i < slider.slides.length; i++)
-        {
-          const circle = document.createElement('div');
-          circle.classList.add("circle");
-          if (i === 0) circle.classList.add("active");
-          circle.addEventListener("click", function(){
-            const index = [...this.parentElement.children].indexOf(this)
-            slider.index = index;
-            slider.changeSlide();
-          })
-          document.getElementById("circles").appendChild(circle);
-        }
+
+      prev: () => {
+        if (slider_.index === 0) slider_.index = slider_.slides.length-1;
+        else slider_.index--;
+        slider_.changeSlide();
       },
-      prev: function() {
-        if (slider.index === 0) slider.index = slider.slides.length-1;
-        else slider.index--;
-        slider.changeSlide();
+
+      next: () => {
+        if (slider_.index === slider_.slides.length-1) slider_.index = 0;
+        else slider_.index++;
+        slider_.changeSlide();
       },
-      next: function() {
-        if (slider.index === slider.slides.length-1) slider.index = 0;
-        else slider.index++;
-        slider.changeSlide();
-      },
-      changeSlide:function() {
+
+      changeSlide: () => {
         document.querySelector(".slide.active").classList.remove("active");
-        slider.slides[slider.index].classList.add("active");
+        slider_.slides[slider_.index].classList.add("active");
         document.querySelector('.circle.active').classList.remove("active");
-        document.querySelectorAll('.circle')[slider.index].classList.add("active");
+        document.querySelectorAll('.circle')[slider_.index].classList.add("active");
       },
+
+      timerId: null,
       index: 0
     }
 
-    slider.createCircles();
-    slider.prev_.addEventListener("click", slider.prev);
-    slider.next_.addEventListener("click", slider.next);
-    timer = setInterval(slider.next, 6000);
-  }
+    slider_.timerId = setInterval(slider_.next, 6000);
+    setSlider(slider_)
 
-  componentWillUnmount() {
-    clearInterval(timer);
-  }
+    return () => {
+      clearInterval(slider_.timerId);
+    }
+  }, [])
 
-  render() {
-    return (
-      <div id="main">
-        <div className="slider">
-          <Slide title="Vstavliu tut cho-to krasivoe i mb dlinnoe" caption="Lorem ipsum tudim sudim" active index={1} />
-          <Slide title="Bla-bla-bla-bla-bla" caption="Lorem ipsum tudim sudim" index={2} />
-          <Slide title="i tut tozhe bla-bla-bla)00" caption="Lorem ipsum tudim sudim" index={3} />
-          <Slide title="Nu pozhalui i tut bla-bla-bla!" caption="Lorem ipsum tudim sudim" index={4} />
-          <div className="controls">
-            <div className="controls-inner">
-              <img className="slider-control" src="/images/back.svg" alt="back arrow" id="prev" />
-              <div id="circles">
-              </div>
-              <img className="slider-control" src="/images/forward.svg" alt="forward arrow" id="next" />
-            </div>
-          </div>
-        </div>
+  return (
+    <div id="main">
+      <div className="slider">
+        <Slide title="Vstavliu tut cho-to krasivoe i mb dlinnoe" caption="Lorem ipsum tudim sudim" active index={1} />
+        <Slide title="Bla-bla-bla-bla-bla" caption="Lorem ipsum tudim sudim" index={2} />
+        <Slide title="i tut tozhe bla-bla-bla)00" caption="Lorem ipsum tudim sudim" index={3} />
+        <Slide title="Nu pozhalui i tut bla-bla-bla!" caption="Lorem ipsum tudim sudim" index={4} />
+        <Controls slider={slider}/>
       </div>
-    );
-  }
+    </div>
+  )
 }
 
 function Slide(props) {
   const { title, caption, index, active } = props;
-  return (<div className={`slide slide-${index} ${active ? 'active' : null}`}>
+  return (<div className={`slide slide-${index} ${active ? 'active' : ''}`}>
       <div className="container">
           <div className="caption">
               <h2>{title}</h2>
@@ -86,4 +67,43 @@ function Slide(props) {
   </div>)
 }
 
-export default Slider;
+function Controls(props) {
+  const { slider } = props;
+  return (<div className="controls">
+  <div className="controls-inner">
+    <img className="slider-control" onClick={slider.prev} src="/images/back.svg" alt="back arrow" id="prev" />
+      <Circles slider={ slider } />
+    <img className="slider-control" onClick={slider.next} src="/images/forward.svg" alt="forward arrow" id="next" />
+  </div>
+</div>)
+}
+
+function Circles(props) {
+  const { slider } = props;
+  const [circles, setCircles] = useState(null)
+
+  useEffect(() => {
+    if (!slider.slides) return;
+    const circlesArr = [];
+
+    for (let i = 0; i < slider.slides.length; i++)
+    {
+      function changeSlideOnCircle(e){
+        const self = e.target;
+        const index = [...self.parentElement.children].indexOf(self)
+        slider.index = index;
+        slider.changeSlide();
+      }
+
+      const circle = <div key={i} className={i === 0 ? "circle active" : "circle"} onClick={changeSlideOnCircle}></div>
+      circlesArr.push(circle);
+    }
+    setCircles(circlesArr)
+  }, [slider])
+
+  return (
+    <div id="circles">
+      {circles}
+    </div>
+  )
+}

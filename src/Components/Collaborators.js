@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
-import { Pagination } from "./Utilities"
+import { Pagination, Loader } from "./Utilities"
 import '../Styles/Collaborators.css';
 import HTTP from '../http'
 
 export default function Collaborators() {
-    const [collaborators, setCollaborators] = useState([]);
+    const [collaborators, setCollaborators] = useState();
     const [page, setPage] = useState(1);
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function Collaborators() {
         setPage(page+1)
     }
 
-    return (
+    return collaborators ? (
         <div className="main">
             <div>
                 <form className="filters card">
@@ -92,12 +92,11 @@ export default function Collaborators() {
                 </form>
             </div>
 
-
             <CollaboratorsList collaborators={collaborators}>
                 <Pagination page={page} onPrev={onPrev} onNext={onNext} />
             </CollaboratorsList>
         </div>
-    )
+    ) : <Loader display />
 }
 
 function Collaborator(props) {
