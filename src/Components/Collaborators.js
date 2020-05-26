@@ -73,7 +73,7 @@ export default function Collaborators() {
                             </label>
                         </div>
                     </div>
-                    <button className="btn btn-classic" type="submit">Apply filters</button>
+                    <button className="btn btn-white btn-classic" type="submit">Apply filters</button>
                 </form>
             </div>
 

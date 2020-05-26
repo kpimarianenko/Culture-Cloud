@@ -6,6 +6,7 @@ import Slider from './Slider';
 import Login from '../Components/Login';
 import Register from '../Components/Register';
 import { Route } from "react-router-dom";
+import Gallery from './Gallery';
 
 export default function Container(props) {
     const { user } = props;
@@ -14,7 +15,8 @@ export default function Container(props) {
             <Route exact path='/' component={Slider}/>
             <Route path='/contacts' component={Contacts}/>
             <Route exact path='/collaborators' component={Collaborators}/>
-            <Route exact path='/collaborators/:id' render={(props) => <Collaborator {...props} user={user} />} />
+            <Route exact path='/collaborators/:id' component={Collaborator} />
+            <Route exact path='/collaborators/gallery/:id' component={Gallery} />
             <Route path='/auth/login' component={Login}/>
             <Route path='/auth/register' component={Register}/>
         </div>

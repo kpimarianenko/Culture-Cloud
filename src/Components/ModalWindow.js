@@ -10,7 +10,7 @@ export default function ModalWindow(props) {
     }
 
     return display ? (
-        <div onClick={onOutsideClickHadler} className="modal-wrapper" {...attrs} >
+        <div onMouseDown={onOutsideClickHadler} className="modal-wrapper" {...attrs} >
             <div className="card modal">
                 <div className="modal-header">
                     <h3>{header || "Are you sure?"}</h3>

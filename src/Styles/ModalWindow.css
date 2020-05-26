@@ -14,8 +14,8 @@
     margin: auto;
     margin-top: 20vh;
     background-color: white;
-    min-width: 300px;
-    max-width: 50%;
+    width: 400px;
+    max-width: 400px;
     width: fit-content;
     box-sizing: border-box;
     padding: 15px;

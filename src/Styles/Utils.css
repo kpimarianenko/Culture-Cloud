@@ -29,7 +29,8 @@
 }
 
 .pagination, .pagination-wrapper {
-  margin: auto;
+  margin: 0 auto;
+  height: fit-content;
   display: flex;
   flex-direction: row;
 }
@@ -66,4 +67,14 @@
   color: white;
   transition: background-color 0.1s;
   transition: color 0.1s;
+}
+
+.excursion.message {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  color: #e7757f;
+  border: 1.5px solid gainsboro;
+  border-top: none;
+  padding: 10px;
 }

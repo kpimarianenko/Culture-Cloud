@@ -103,3 +103,11 @@ h2 {
     line-height: 20px;
     font-size: 20px;
 }
+
+@media screen and (max-width: 1040px) {
+    .socmedias {
+        width: 80%;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+}

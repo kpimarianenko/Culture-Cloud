@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import HTTP from '../http'
 import { useState } from 'react';
 import '../Styles/Collaborator.css';
-import { Pagination, FormSection } from './Utilities';
+import { Pagination, FormSection, Loader } from './Utilities';
 import ModalWindow from './ModalWindow';
 import { Context } from '../context'
 import FormValidator from '../validator';
@@ -15,6 +15,10 @@ export default function Collaborator(props) {
     const [formErrors, setFormErrors] = useState({})
     const [modal, setModal] = useState(false)
     const [collaborator, setCollaborator] = useState()
+    const [excursions, setExcursions] = useState()
+    const [page, setPage] = useState(1)
+    const [quantity, setQuantity] = useState(10)
+    const [maxPage, setMaxPage] = useState(1)
 
     const validate = FormValidator.setOptions({
         fields: {
@@ -56,21 +60,42 @@ export default function Collaborator(props) {
     }
 
     useEffect(() => {
-        HTTP.getCollaborator(id)
-        .then(collab => {
-            setCollaborator(collab)
+        setCollaborator(null)
+        Promise.all([HTTP.getCollaborator(id), HTTP.getCollaboratorsExcursions(id)])
+        .then(response => {
+            setCollaborator(response[0])
+            setExcursions(response[1])
         })
         .catch(err => {/*@TODO ERROR*/})
-    }, [])
+    }, [id])
+
+    useEffect(() => {
+        if (!excursions) return;
+        const maxPage = Math.ceil(excursions.length / quantity) || 1
+        setMaxPage(maxPage)
+    }, [excursions])
+
+    const prev = () => {
+        setPage(page - 1)
+    }
+
+    const next = () => {
+        setPage(page + 1)
+    }
 
     const addExcursion = (e) => {
+        setExcursions(null)
         e.preventDefault(); 
         if (handleInput()) {
             setModal(false);
             HTTP.addExcursion('add-excursion')
-            .then(x => {
-                console.log(x)
+            .then(() => {
+                return HTTP.getCollaboratorsExcursions(id)
             })
+            .then(excursions => {
+                setExcursions(excursions)
+            })
+            .catch(err => {/*@TODO ERROR*/})
         }
     }
     
@@ -88,36 +113,11 @@ export default function Collaborator(props) {
                     <p className="about">{collaborator.about}</p>
                 </div>
             </div>
-            <div className="excursions-wrapper">
-                <h2>Excursions</h2>
-                <table className="excursions">
-                    <thead>
-                        <tr>
-                            <th className="name">Name</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="excursion">
-                            <td className="name">Картины витька</td>
-                            <td>Пивас</td>
-                        </tr>
-                        <tr className="excursion">
-                            <td className="name">Скульптуры петра</td>
-                            <td>Чекушка</td>
-                        </tr>
-                        <tr className="excursion">
-                            <td className="name">Выставка васи</td>
-                            <td>Закусон</td>
-                        </tr>
-                    </tbody>
-                </table>
-                {user && user._id === id ? <AddExcursion onClick={() => {setModal(true)}} /> : null}
-                <Pagination page={1} />
-            </div>
+            <Excursions excursions={excursions ? excursions.slice(quantity * (page - 1), quantity * (page - 1) + quantity) : excursions}/>
+            {user && user._id === id ? <AddExcursion onClick={() => {setModal(true)}} /> : null}
+            <Pagination onPrev={prev} onNext={next} page={page} maxPage={maxPage} />
             <ModalWindow 
               onCancel={() => {setModal(false)}} 
-              onAccept={() => {setModal(false)}} 
               display={modal}
               header="Add a new excursion"
               form="add-excursion"
@@ -137,4 +137,49 @@ export default function Collaborator(props) {
 function AddExcursion(props) {
     const { ...attrs } = props;
     return ( <div {...attrs} className="btn-add_excursion">Додати екскурсію</div> )
+}
+
+function Excursions(props) {
+    const { excursions } = props;
+    const [excursionsElement, setExcursionsElement] = useState(null)
+
+    useEffect(() => {
+        if (excursions) {
+            const excursionsArray = excursions.map(element => (<Excursion key={element._id} excursion={element} />))
+            setExcursionsElement(excursionsArray)
+        }
+    }, [excursions])
+
+    return excursions ? (
+    <div className="excursions-wrapper">
+        <h2>Excursions</h2>
+        <table className="excursions">
+            <thead>
+                <tr>
+                    <th className="name">Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {excursionsElement}
+            </tbody>
+        </table>
+        {excursions && excursions.length === 0 ? <ExcursionsError/> : null}
+    </div> ) : <Loader />
+}
+
+function Excursion(props) {
+    const { excursion } = props;
+    return (
+        <tr className="excursion">
+            <td className="name">{excursion.name}</td>
+            <td>{`${excursion.price}$`}</td>
+        </tr>
+    )
+}
+
+function ExcursionsError() {
+    return (<div className="excursion message">
+        Нажаль цей заклад поки не додав екскурсій
+    </div>)
 }

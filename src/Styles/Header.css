@@ -10,6 +10,32 @@
     white-space: nowrap;
 }
 
+.profile-link {
+    color: #f4f5f6;
+    text-decoration: none;
+}
+
+.header-logo {
+    display: flex;
+    flex-direction: row;
+}
+
+.menu .button {
+    margin: auto 0;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 30px;
+}
+
+.button .line {
+    content: "";
+    height: 6px;
+    width: 100%;
+    background-color: #f4f5f6;
+}
+
 .menu, .nav-menu, #header, .profile {
     justify-content: space-between;
     display: flex;
@@ -41,7 +67,13 @@
     display: none;
 }
 
-.nav-element:hover {
+.menu .button:hover .line {
+    transition: background-color 0.2s;
+    cursor: pointer;
+    background-color: #fce38a;
+}
+
+.nav-element:hover, .profile-link:hover {
     transition: color 0.2s;
     cursor: pointer;
     color: #fce38a;
@@ -53,6 +85,10 @@
 
 .authbtns > a {
     margin: auto 5px;
+}
+
+.authbtns > a:first-child {
+    margin-left: 0;
 }
 
 .profile_info {
@@ -149,4 +185,81 @@ h1 {
 .btn {
     border: 1px solid #f4f5f6;
     color: #f4f5f6;
+}
+
+.mobile-menu {
+    display: none;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 100%;
+}
+
+.menu-element {
+    margin: 2px 0;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+@media screen and (max-width: 1040px) {
+    #header {
+        position: sticky;
+        z-index: 1;
+        top: 0;
+    }
+
+    #header > .profile_info, .menu .nav-menu, .nav-element::after {
+        display: none;
+    }
+
+    .mobile-menu .profile_info, .mobile-menu {
+        display: block;
+    }
+
+    .profile_info {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .menu {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+    }
+
+    .nav-element, .authbtns, .profile {
+        margin: 1px 0;
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+        background-color: rgba(0, 0, 0, 0.9);
+        animation-name: appears;
+        animation-duration: 0.3s;
+    }
+
+    .menu .button {
+        display: flex;
+    }
+
+    .profile {
+        justify-content: left;
+        margin-bottom: 2px;
+    }
+}
+
+@keyframes appears {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

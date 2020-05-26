@@ -4,6 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const ExcursionSchema = {
     name: { type: String, required: true },
     avaUrl: { type: String },
+    price: { type: Number },
     about: { type: String },
     place: { type: ObjectId, ref: 'Collaborator'},
 }
@@ -11,12 +12,12 @@ const ExcursionSchema = {
 const ExcursionModel = mongoose.model('Excursion', ExcursionSchema);
 
 module.exports = class Excursion {
-    constructor(name, about, placeId, avaUrl) {
+    constructor(name, about, price, placeId, avaUrl) {
         this.name = name;
         this.avaUrl = avaUrl;
         this.price = price;
         this.place = placeId;
-        this.avaUrl = avaUrl;
+        this.about = about;
     }
 
     static add(excursion) {
@@ -33,5 +34,9 @@ module.exports = class Excursion {
 
     static get(id) {
         return ExcursionModel.findById(id).populate('place');
+    }
+
+    static getCollaboratorsExcursions(collabId) {
+        return ExcursionModel.find({place: collabId});
     }
 }
