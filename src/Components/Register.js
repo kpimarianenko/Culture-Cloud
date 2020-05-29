@@ -94,7 +94,7 @@ export default function Register() {
             setDisplayLoader(true)
             HTTP.register('register')
             .then(response => {
-                if (response.status !== 200) setErrorMessage(response.message)
+                if (response.status !== 200) setErrorMessage(response.data.message)
                 else history.push('/auth/login')
             })
             .catch(err => setErrorMessage(err.toString()))

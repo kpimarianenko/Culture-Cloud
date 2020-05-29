@@ -40,16 +40,16 @@ export default function Login() {
       HTTP.login('login')
       .then(response => {
         if (response.status !== 200) {
-          setErrorMessage(response.message);
+          setErrorMessage(response.data.message);
         }
         else {
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('token', response.data.token);
           return HTTP.getProfile()
         }
       })
       .then(authData => {
-        if (authData) {
-          renderUser(authData.user)
+        if (authData.data) {
+          renderUser(authData.data.user)
           history.push('/')
         }
       })

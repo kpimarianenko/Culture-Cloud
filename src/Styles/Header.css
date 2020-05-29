@@ -235,7 +235,7 @@ h1 {
         flex-direction: column;
     }
 
-    .nav-element, .authbtns, .profile {
+    .nav-element, .profile {
         margin: 1px 0;
         width: 100%;
         padding: 5px;

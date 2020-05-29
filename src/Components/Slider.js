@@ -58,7 +58,7 @@ export default function Slider(props) {
 function Slide(props) {
   const { title, caption, index, active } = props;
   return (<div className={`slide slide-${index} ${active ? 'active' : ''}`}>
-      <div className="container">
+      <div className="caption-container">
           <div className="caption">
               <h2>{title}</h2>
               <p>{caption}</p>

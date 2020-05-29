@@ -27,7 +27,7 @@ function App(props) {
       HTTP.getProfile()
       .then(authData => {
         if (authData.status === 200)
-          setUser(authData.user);
+          setUser(authData.data.user);
       })
     }, [])
 
@@ -37,7 +37,7 @@ function App(props) {
       renderUser, logout, isUserRole, user
     }}>
       <BrowserRouter>
-        <div>
+        <div className="container-wrapper">
           <Header user={user} />
           <Container user={user} />
         </div>

@@ -1,12 +1,12 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import HTTP from '../http'
-import { useState } from 'react';
 import '../Styles/Collaborator.css';
 import { Pagination, FormSection, Loader } from './Utilities';
 import ModalWindow from './ModalWindow';
 import { Context } from '../context'
 import FormValidator from '../validator';
 import { Link } from 'react-router-dom';
+import Error from './Error';
 
 export default function Collaborator(props) {
     const { user } = useContext(Context)
@@ -17,8 +17,11 @@ export default function Collaborator(props) {
     const [collaborator, setCollaborator] = useState()
     const [excursions, setExcursions] = useState()
     const [page, setPage] = useState(1)
-    const [quantity, setQuantity] = useState(10)
     const [maxPage, setMaxPage] = useState(1)
+    const [errorCode, setErrorCode] = useState(0)
+    const [errorMessage, setErrorMessage] = useState("")
+
+    const quantity = 10;
 
     const validate = FormValidator.setOptions({
         fields: {
@@ -29,7 +32,7 @@ export default function Collaborator(props) {
           price: {
             required: true,
             float: true,
-            max: 5
+            max: 6
           },
           about: {
             required: true,
@@ -63,10 +66,14 @@ export default function Collaborator(props) {
         setCollaborator(null)
         Promise.all([HTTP.getCollaborator(id), HTTP.getCollaboratorsExcursions(id)])
         .then(response => {
-            setCollaborator(response[0])
-            setExcursions(response[1])
+            if (response[0].status !== 200 || response[1].status !== 200) {
+                setErrorCode(response[0].status || response[1].status)
+                setErrorMessage(response[0].data.message || response[1].data.message)
+            }
+            setCollaborator(response[0].data)
+            setExcursions(response[1].data)
         })
-        .catch(err => {/*@TODO ERROR*/})
+        .catch(() => setErrorCode(500))
     }, [id])
 
     useEffect(() => {
@@ -92,18 +99,23 @@ export default function Collaborator(props) {
             .then(() => {
                 return HTTP.getCollaboratorsExcursions(id)
             })
-            .then(excursions => {
-                setExcursions(excursions)
+            .then(response => {
+                if (response.status)
+                    setErrorCode(response.status)
+                setExcursions(excursions.data)
             })
-            .catch(err => {/*@TODO ERROR*/})
+            .catch(() => setErrorCode(500))
         }
     }
     
+    if (errorCode) return <Error code={errorCode} message={errorMessage} />
     return collaborator ? (
         <div className="card collaborator-page">
             <div className="info">
                 <div className="photo">
-                    <img className="card ava" src={collaborator.avaUrl || "/images/museum-placeholder.jpg"} alt=""/>
+                    <div className="ava-wrapper">
+                        <img className="card ava" src={collaborator.avaUrl || "/images/museum-placeholder.jpg"} alt=""/>
+                    </div>
                     <Link className="gallery-link" to={`/collaborators/gallery/${id}`}>Gallery</Link>
                 </div>
                 <div className="details">

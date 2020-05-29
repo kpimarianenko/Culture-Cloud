@@ -8,7 +8,10 @@ export default class HTTP {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
         });
-        return await response.json();
+        return {
+            status: response.status,
+            data: await response.json()
+        };
     }
 
     static async post(url, formID, formData) {
@@ -19,7 +22,10 @@ export default class HTTP {
             },
             body: formData ? formData : new FormData(document.getElementById(formID))
         });
-        return await response.json();
+        return {
+            status: response.status,
+            data: await response.json()
+        };
     }
 
     static registerByGoogle(formData) {
@@ -56,5 +62,13 @@ export default class HTTP {
 
     static getCollaboratorsExcursions(collabID) {
         return this.get(`${project.dev.hostname}/api/v1/excursions/collaborators/${collabID}`)
+    }
+
+    static getCollaboratorsGallery(collabID, page) {
+        return this.get(`${project.dev.hostname}/api/v1/collaborators/gallery/${collabID}?page=${page}`)
+    }
+
+    static getCollaboratorsFilters() {
+        return this.get(`${project.dev.hostname}/api/v1/collaborators/filters`)
     }
 } 

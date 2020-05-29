@@ -9,7 +9,6 @@ import { Route } from "react-router-dom";
 import Gallery from './Gallery';
 
 export default function Container(props) {
-    const { user } = props;
     return (
         <div className="container">
             <Route exact path='/' component={Slider}/>

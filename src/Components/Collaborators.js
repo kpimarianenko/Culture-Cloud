@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { Pagination, Loader } from "./Utilities"
+import Error from "./Error"
+import Filters, { FilterSection, FiltersCheckbox } from "./Filters"
 import '../Styles/Collaborators.css';
 import HTTP from '../http'
 
@@ -8,18 +10,26 @@ export default function Collaborators() {
     const [collaborators, setCollaborators] = useState();
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(1);
+    const [errorCode, setErrorCode] = useState(0)
+    const [errorMessage, setErrorMessage] = useState("")
+    const [filter, setFilters] = useState();
 
     const renderCollaborators = () =>  {
         setCollaborators(null)
-        HTTP.getCollaborators(page)
+        Promise.all([HTTP.getCollaborators(page), HTTP.getCollaboratorsFilters()])
         .then(response => {
-            setMaxPage(response.maxPage)
-            setCollaborators(response.collaborators)
+            console.log(response[1])
+            if (response[0].status !== 200) {
+                setErrorCode(response[0].status)
+                setErrorMessage(response[0].data.message)
+            }
+            setMaxPage(response[0].data.maxPage)
+            setCollaborators(response[0].data.collaborators)
+            setFilters(response[1].data)
         })
-        .catch(err => {/*@TODO ERROR*/})
+        .catch(() => setErrorCode(500))
     }
 
-    useEffect(renderCollaborators, []);
     useEffect(renderCollaborators, [page]);
 
     const onPrev = () => {
@@ -30,53 +40,15 @@ export default function Collaborators() {
         setPage(page + 1)
     }
 
+    if (errorCode) return <Error code={errorCode} message={errorMessage} />
     return collaborators ? (
         <div className="main">
             <div>
-                <form className="filters card">
-                    <h2>Filters</h2>
-                    <div className="filters__section">
-                        <h3 className="filters__section__header">Type</h3>
-                        <div className="filters__inputs">
-                            <label className="checkbox__container">
-                                <input type="checkbox" name="" id="ch1"/>Museum
-                                <span className="checkmark"></span>
-                            </label>
-                            <label className="checkbox__container">
-                                <input type="checkbox" name="" id="ch2"/>Gallery
-                                <span className="checkmark"></span>
-                            </label>
-                            <label className="checkbox__container">Exhibition
-                                <input type="checkbox" name="" id="ch3"/>
-                                <span className="checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div className="filters__section">
-                        <h3 className="filters__section__header">Location</h3>
-                        <div className="filters__inputs">
-                            <label className="checkbox__container">Kyiv
-                                <input type="checkbox" name="" id="ch4"/>
-                                <span className="checkmark"></span>
-                            </label>
-                            <label className="checkbox__container">Lviv
-                                <input type="checkbox" name="" id="ch5"/>
-                                <span className="checkmark"></span>
-                            </label>
-                            <label className="checkbox__container">Odessa
-                                <input type="checkbox" name="" id="ch6"/>
-                                <span className="checkmark"></span>
-                            </label>
-                            <label className="checkbox__container">Kharkiv
-                                <input type="checkbox" name="" id="ch7"/>
-                                <span className="checkmark"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <button className="btn btn-white btn-classic" type="submit">Apply filters</button>
-                </form>
+                {filter ? <Filters>
+                    <FilterSection name="type" values={filter.types} title="Type" />
+                    <FilterSection name="city" values={filter.cities} title="Location" />
+                </Filters> : <Loader display />}
             </div>
-
             <CollaboratorsList collaborators={collaborators}>
                 <Pagination page={page} maxPage={maxPage} onPrev={onPrev} onNext={onNext} />
             </CollaboratorsList>
@@ -118,7 +90,7 @@ function CollaboratorsList(props) {
 
     useEffect(() => {
         setCollaboratorsComponents(mapCollaborators(collaborators))
-    }, [])
+    }, [collaborators])
 
     return (
         <div className="collaborators">

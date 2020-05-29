@@ -22,7 +22,7 @@ export default class FormValidator {
         if (!target) return;
         const value = target.value;
         const field = this.fields[name.toString()];
-        if (field.required) {;
+        if (field.required) {
             if (!value) {
                 let error = this.errors[name.toString()] ? this.errors[name.toString()].required : null;
                 return error || this.classicError.required;
@@ -65,7 +65,7 @@ export default class FormValidator {
             }
         }
         if (field.float) {
-            if (!value.match(/^\d*\.?\d*$/)) {
+            if (!value.match(/^\d+(.\d{1,2})?$/)) {
                 let error = this.errors[name.toString()] ? this.errors[name.toString()].float : null;
                 return error || this.classicError.float;
             }

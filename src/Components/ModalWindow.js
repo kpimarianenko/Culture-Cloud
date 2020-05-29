@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../Styles/ModalWindow.css'
 
 export default function ModalWindow(props) {

@@ -89,7 +89,7 @@ class Collaborator extends User {
     }
 
     static getPage(page, quantity) {
-        return UserModel.find({role: 1}).skip((page - 1) * quantity).limit(quantity);;
+        return UserModel.find({role: 1}).skip((page - 1) * quantity).limit(quantity);
     }
 
     static delete(id) {
@@ -101,7 +101,15 @@ class Collaborator extends User {
     }
 
     static update(user) {
-        return UserModel.findOneAndUpdate({_id: user.id}, user);
+        return UserModel.findOneAndUpdate({_id: user.id, role: 1}, user);
+    }
+
+    static getTypes() {
+        return UserModel.find({role: 1}).distinct('type');
+    }
+
+    static getCities() {
+        return UserModel.find({role: 1}).distinct('city');
     }
 }
 

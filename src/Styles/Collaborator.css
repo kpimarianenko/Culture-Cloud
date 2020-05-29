@@ -24,15 +24,6 @@
     margin-bottom: 10px;
 }
 
-/* .collaborator-page .about {
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 7px;
-    padding: 15px;
-    border: 2px solid gainsboro;
-    background-color: whitesmoke;
-} */
-
 .collaborator-page .name {
     text-align: left;
 }
@@ -107,3 +98,13 @@
     margin-top: 10px;
 }
 
+@media screen and (max-width: 680px) {
+    .collaborator-page .ava {
+        width: 100%;
+    }
+
+    .collaborator-page .info, .collaborator-page .photo {
+        display: flex;
+        flex-direction: column;
+    }
+}

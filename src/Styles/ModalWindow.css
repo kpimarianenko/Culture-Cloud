@@ -55,3 +55,9 @@
 .modal-footer > .btn-classic {
     margin-left: 15px;
 }
+
+@media screen and (max-width: 680px) {
+    .modal {
+        max-width: 80vw;
+    }
+}

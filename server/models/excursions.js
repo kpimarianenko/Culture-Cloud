@@ -39,4 +39,12 @@ module.exports = class Excursion {
     static getCollaboratorsExcursions(collabId) {
         return ExcursionModel.find({place: collabId});
     }
+
+    static getGallery(collabId, page, quantity) {
+        return ExcursionModel.find({place: collabId, avaUrl: { $exists: true }}, {avaUrl: 1, _id: 0}).skip((page - 1) * quantity).limit(quantity);
+    }
+
+    static getGalleryCount(collabId) {
+        return ExcursionModel.find({place: collabId}).distinct('avaUrl').then(array => array.length);
+    }
 }

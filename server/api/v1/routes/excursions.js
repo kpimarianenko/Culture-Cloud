@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const utils = require('../../../utils');
+const uploader = require('cloudinary').v2.uploader;
 const Excursion = require('../../../models/excursions');
 
 router.get('/', function(req, res){

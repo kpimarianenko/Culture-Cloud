@@ -53,8 +53,3 @@ export function Pagination(props) {
         </div>
     </div>)
 }
-
-function PaginationButton(props) {
-    const { children, ...attrs } = props;
-    return (<div {...attrs} >{children}</div>)
-}

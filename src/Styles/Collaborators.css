@@ -136,3 +136,40 @@ input[type="checkbox"] {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+@media screen and (max-width: 680px) {
+    .main {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        margin-bottom: 20px;
+    }
+
+    .collaborator {
+        flex-direction: column;
+        min-height: 0;
+        max-height: inherit;
+    }
+
+    .collaborator__ava {
+        min-width: 100%;
+        max-width: 100%;
+        height: 300px;
+    }
+
+    .collaborator__info {
+        margin: 0;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+
+    .button__outer > * {
+        float: none;
+    }
+
+    .button__outer {
+        display: flex;
+        justify-content: space-around;
+    }
+}

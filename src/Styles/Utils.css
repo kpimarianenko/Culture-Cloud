@@ -78,3 +78,16 @@
   border-top: none;
   padding: 10px;
 }
+
+.error-page {
+  width: fit-content;
+  margin: 20px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.filters__error {
+  width: 100%;
+  text-align: center;
+  margin: 5px;
+}

@@ -35,9 +35,8 @@ router.post('/login', function(req, res){
 router.post('/register', function(req, res, next) {
     User.getByEmail(req.body.email)
     .then(user => {
-        if (user) res.json({
-            message: "User with this email already exist",
-            status: 400
+        if (user) res.status(400).json({
+            message: "User with this email already exist"
         })
         else next();
     })
