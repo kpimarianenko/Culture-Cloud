@@ -5,7 +5,7 @@ import { Pagination, FormSection, Loader } from './Utilities';
 import ModalWindow from './ModalWindow';
 import { Context } from '../context'
 import FormValidator from '../validator';
-import { Link } from 'react-router-dom';
+import { Profile } from './Me'
 import Error from './Error';
 
 export default function Collaborator(props) {
@@ -26,32 +26,33 @@ export default function Collaborator(props) {
     const validate = FormValidator.setOptions({
         fields: {
           name: {
-            max: 64,
+            maxlen: 64,
             required: true,
           },
           price: {
             required: true,
-            float: true,
-            max: 6
+            price: true,
+            max: 1000,
+            min: 0.5
           },
           about: {
             required: true,
-            min: 20,
-            max: 500
+            minlen: 20,
+            maxlen: 500
           }
         },
         errors: {
           name: {
-            max: 'Name is too long',
+            maxlen: 'Name is too long',
             required: 'Name cannot be empty'
           },
           price: {
             required: 'Price cannot be empty',
             float: 'Price is a float number',
-            max: 'Price is too big'
+            maxlen: 'Price is too big'
           },
           about: {
-            required: 'Infromation cannot be empty'
+            required: 'Information cannot be empty'
           }
         }
     })
@@ -96,13 +97,15 @@ export default function Collaborator(props) {
         if (handleInput()) {
             setModal(false);
             HTTP.addExcursion('add-excursion')
-            .then(() => {
+            .then((response) => {
+                if (response.status !== 200)
+                    setErrorCode(response.status)
                 return HTTP.getCollaboratorsExcursions(id)
             })
             .then(response => {
-                if (response.status)
+                if (response.status !== 200)
                     setErrorCode(response.status)
-                setExcursions(excursions.data)
+                setExcursions(response.data)
             })
             .catch(() => setErrorCode(500))
         }
@@ -110,24 +113,11 @@ export default function Collaborator(props) {
     
     if (errorCode) return <Error code={errorCode} message={errorMessage} />
     return collaborator ? (
-        <div className="card collaborator-page">
-            <div className="info">
-                <div className="photo">
-                    <div className="ava-wrapper">
-                        <img className="card ava" src={collaborator.avaUrl || "/images/museum-placeholder.jpg"} alt=""/>
-                    </div>
-                    <Link className="gallery-link" to={`/collaborators/gallery/${id}`}>Gallery</Link>
-                </div>
-                <div className="details">
-                    <h2 className="name">{collaborator.placeName}</h2>
-                    <h3 className="type">{collaborator.type}</h3>
-                    <div className="line"></div>
-                    <p className="about">{collaborator.about}</p>
-                </div>
-            </div>
-            <Excursions excursions={excursions ? excursions.slice(quantity * (page - 1), quantity * (page - 1) + quantity) : excursions}/>
-            {user && user._id === id ? <AddExcursion onClick={() => {setModal(true)}} /> : null}
-            <Pagination onPrev={prev} onNext={next} page={page} maxPage={maxPage} />
+        <Profile type={collaborator.type} userId={collaborator._id} name={collaborator.name} avaUrl={collaborator.avaUrl} about={collaborator.about}>
+            { excursions ? <Excursions excursions={excursions ? excursions.slice(quantity * (page - 1), quantity * (page - 1) + quantity) : excursions}>
+                {user && user._id === id ? <AddExcursion onClick={() => {setModal(true)}} /> : null}
+                <Pagination onPrev={prev} onNext={next} page={page} maxPage={maxPage} />
+            </Excursions> : <Loader display />}
             <ModalWindow 
               onCancel={() => {setModal(false)}} 
               display={modal}
@@ -142,7 +132,7 @@ export default function Collaborator(props) {
                     <FormSection onChange={handleInput} title="Choose photo (optional)" name="avatar" type="file" />
                 </form>
             </ModalWindow>
-        </div>
+        </Profile>
     ) : <div className="loader"></div>
 }
 
@@ -152,7 +142,7 @@ function AddExcursion(props) {
 }
 
 function Excursions(props) {
-    const { excursions } = props;
+    const { excursions, children } = props;
     const [excursionsElement, setExcursionsElement] = useState(null)
 
     useEffect(() => {
@@ -177,6 +167,7 @@ function Excursions(props) {
             </tbody>
         </table>
         {excursions && excursions.length === 0 ? <ExcursionsError/> : null}
+        { children }
     </div> ) : <Loader />
 }
 
@@ -185,7 +176,7 @@ function Excursion(props) {
     return (
         <tr className="excursion">
             <td className="name">{excursion.name}</td>
-            <td>{`${excursion.price}$`}</td>
+            <td className="price">{`${excursion.price.toFixed(2)}$`}</td>
         </tr>
     )
 }

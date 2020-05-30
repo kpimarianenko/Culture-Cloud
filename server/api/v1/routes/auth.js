@@ -50,7 +50,7 @@ router.post('/register', function(req, res, next) {
         uploader.upload_stream({ resource_type: 'raw' }, function (error, result) {
             if (error) res.status(500).json(error);
             else {
-                User.add(new User(req.body.email, utils.sha512(req.body.password, config.salt), name, result.url))
+                User.add(new User(req.body.email, utils.sha512(req.body.password, config.salt), name, req.body.about, result.url))
                 .then(user => {
                     if (user)
                     res.status(200).json({
@@ -66,7 +66,7 @@ router.post('/register', function(req, res, next) {
         })
         .end(req.files.avatar.data);
         else {
-            User.add(new User(req.body.email, utils.sha512(req.body.password, config.salt), name))
+            User.add(new User(req.body.email, utils.sha512(req.body.password, config.salt), name, req.body.about))
             .then(user => {
                 if (user)
                 res.status(200).json({

@@ -98,6 +98,10 @@
     margin-top: 10px;
 }
 
+.price {
+    text-align: right;
+}
+
 @media screen and (max-width: 680px) {
     .collaborator-page .ava {
         width: 100%;

@@ -48,7 +48,7 @@ export default function Login() {
         }
       })
       .then(authData => {
-        if (authData.data) {
+        if (authData && authData.data) {
           renderUser(authData.data.user)
           history.push('/')
         }

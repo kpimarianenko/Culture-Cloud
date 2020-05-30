@@ -23,6 +23,11 @@ function App(props) {
       return user.role === role;
     }
 
+    const isAuth = () => {
+      if (localStorage.getItem('token')) return true;
+      return false
+    }
+
     useEffect(() => {
       HTTP.getProfile()
       .then(authData => {
@@ -34,7 +39,7 @@ function App(props) {
 
     return (
     <Context.Provider value={{
-      renderUser, logout, isUserRole, user
+      renderUser, logout, isUserRole, isAuth, user
     }}>
       <BrowserRouter>
         <div className="container-wrapper">

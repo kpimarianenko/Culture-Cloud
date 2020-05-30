@@ -21,13 +21,14 @@ const UserSchema = {
 const UserModel = mongoose.model('User', UserSchema);
 
 class User {
-    constructor(email, passwordHash, name, avaUrl) {
+    constructor(email, passwordHash, name, about, avaUrl) {
         this.passwordHash = passwordHash;
         this.email = email;
         this.name = name;
         this.registeredAt = new Date();
         this.avaUrl = avaUrl;
         this.isDisabled = false;
+        this.about = about;
     }
 
     static add(user) {
@@ -57,15 +58,11 @@ class User {
     static getByEmailAndPasswordHash(email, passwordHash) {
         return UserModel.findOne({email: email, passwordHash: passwordHash});
     }
-
-    // Assuming you don't want duplicates, you can directly get an array of the unique regId values in the collection using distinct:
-    // Device.distinct('regId', function(err, regIdsArray) {...});
-
 }
 
 class Collaborator extends User {
     constructor(email, passwordHash, name, placeName, city, cardNumber, cvv, expDate, type, about, avaUrl) {
-        super(email, passwordHash, name, avaUrl);
+        super(email, passwordHash, name, about, avaUrl);
         this.expDate = expDate
         this.role = 1;
         this.placeName = placeName;
@@ -73,7 +70,6 @@ class Collaborator extends User {
         this.cvv = cvv;
         this.type = type;
         this.city = city;
-        this.about = about;
     }
 
     static get(id) {
@@ -84,12 +80,12 @@ class Collaborator extends User {
         return UserModel.find({role: 1});
     }
 
-    static getCount() {
-        return UserModel.find({role: 1}).countDocuments();
+    static getCount(search, types, cities) {
+        return UserModel.find({role: 1, placeName: { $regex: `(?i).*${search}.*(?-i)` }, type: {$in: types}, city: {$in: cities}}).countDocuments();
     }
 
-    static getPage(page, quantity) {
-        return UserModel.find({role: 1}).skip((page - 1) * quantity).limit(quantity);
+    static getPage(page, quantity, search, types, cities) {
+        return UserModel.find({role: 1, placeName: { $regex: `(?i).*${search}.*(?-i)` }, type: {$in: types}, city: {$in: cities}}).skip((page - 1) * quantity).limit(quantity);
     }
 
     static delete(id) {

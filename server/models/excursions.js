@@ -6,7 +6,7 @@ const ExcursionSchema = {
     avaUrl: { type: String },
     price: { type: Number },
     about: { type: String },
-    place: { type: ObjectId, ref: 'Collaborator'},
+    place: { type: ObjectId, ref: 'User'},
 }
 
 const ExcursionModel = mongoose.model('Excursion', ExcursionSchema);
@@ -47,4 +47,30 @@ module.exports = class Excursion {
     static getGalleryCount(collabId) {
         return ExcursionModel.find({place: collabId}).distinct('avaUrl').then(array => array.length);
     }
+
+    static getCount(search, from, to) {
+        const options = {
+            name: { $regex: `(?i).*${search}.*(?-i)` },
+        }
+        formPriceOptions(from, to, options)
+        return ExcursionModel.find(options).countDocuments();
+    }
+
+    static getPage(page, quantity, search, from, to) {
+        const options = {
+            name: { $regex: `(?i).*${search}.*(?-i)` },
+        }
+        formPriceOptions(from, to, options)
+        return ExcursionModel.find(options).skip((page - 1) * quantity).limit(quantity).populate('place');
+    }
+}
+
+function formPriceOptions(from, to, options) {
+    const priceOptions = {}
+    if (from)
+        priceOptions.$gte = from;
+    if (to)
+        priceOptions.$lte = to;
+    if (priceOptions.$gte || priceOptions.$lte)
+        options.price = priceOptions;
 }

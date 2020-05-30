@@ -3,10 +3,28 @@ const router = express.Router();
 const utils = require('../../../utils');
 const Collaborator = require('../../../models/users').Collaborator;
 const Excursion = require('../../../models/excursions');
+let quantity = 5;
 
 router.get('/', function(req, res){
-    let quantity = 5;
-    Promise.all([Collaborator.getPage(req.query.page || 1, quantity), Collaborator.getCount()]) 
+    Promise.all([Collaborator.getTypes(), Collaborator.getCities()])
+    .then(response => {
+        return Promise.all([Collaborator.getPage(req.query.page || 1, quantity, "", response[0], response[1]), Collaborator.getCount("", response[0], response[1])]) 
+    })
+    .then(response => {
+        res.json({
+            collaborators: response[0],
+            maxPage: Math.ceil(response[1] / quantity)
+        });
+    })
+    .catch(utils.serverError(res))
+})
+
+router.post('/', function(req, res){
+    const search = req.body.search || "";
+    const type = req.body.type;
+    const city = req.body.city;
+    Promise.all([Collaborator.getPage(req.query.page || 1, quantity, search, type, city), 
+    Collaborator.getCount(search, type, city)]) 
     .then(response => {
         res.json({
             collaborators: response[0],

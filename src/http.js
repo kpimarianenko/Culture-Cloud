@@ -1,9 +1,10 @@
 import project from './projectInfo'
 
 export default class HTTP {
-    static async get(url) {
+    static async get(url, params) {
         const response = await fetch(url, {
             method: 'GET',
+            params,
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
@@ -52,12 +53,16 @@ export default class HTTP {
         return this.get(`${project.dev.hostname}/api/v1/collaborators?page=${page}`)
     }
 
+    static getFilteredCollaborators(page, formID) {
+        return this.post(`${project.dev.hostname}/api/v1/collaborators?page=${page}`, formID)
+    }
+
     static getCollaborator(id) {
         return this.get(`${project.dev.hostname}/api/v1/collaborators/${id}`)
     }
 
     static addExcursion(formID) {
-        return this.post(`${project.dev.hostname}/api/v1/excursions`, formID)
+        return this.post(`${project.dev.hostname}/api/v1/excursions/new`, formID)
     }
 
     static getCollaboratorsExcursions(collabID) {
@@ -70,5 +75,13 @@ export default class HTTP {
 
     static getCollaboratorsFilters() {
         return this.get(`${project.dev.hostname}/api/v1/collaborators/filters`)
+    }
+
+    static getExcursions(page) {
+        return this.get(`${project.dev.hostname}/api/v1/excursions?page=${page}`)
+    }
+
+    static getFilteredExcursions(page, formID) {
+        return this.post(`${project.dev.hostname}/api/v1/excursions?page=${page}`, formID)
     }
 } 

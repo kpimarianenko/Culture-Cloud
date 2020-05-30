@@ -13,19 +13,23 @@ export default function Filters(props) {
 }
 
 export function FilterSection(props) {
-    const { title, values, name, children } = props;
+    const { title, values, name, children, ...attrs } = props;
     const [valuesElements, setValuesElements] = useState()
 
     useEffect(() => {
-        const elements = values.map(element => <FiltersCheckbox name={name} >{element}</FiltersCheckbox>)
-
-        setValuesElements(elements)
+        if (values) {
+            const elements = values.map((element, index) => 
+            <FiltersCheckbox value={element} key={index} {...attrs} name={name} >{element}</FiltersCheckbox>)
+            
+            setValuesElements(elements)
+        }
+        // eslint-disable-next-line
     }, [values])
 
     return (<div className="filters__section">
         <h3 className="filters__section__header">{title}</h3>
         <div className="filters__inputs">
-            {valuesElements || <p className="filters__error">No suitable filters</p>}
+            {!valuesElements && !children ? <p className="filters__error">No suitable filters</p> : valuesElements}
             {children}
         </div>
     </div>)
@@ -35,7 +39,7 @@ export function FiltersCheckbox(props) {
     const {children, ...attrs} = props;
     return (<label className="checkbox__container">
         {children}
-        <input type="checkbox" value="" {...attrs} />
+        <input type="checkbox" {...attrs} />
         <span className="checkmark"></span>
     </label>)
 }

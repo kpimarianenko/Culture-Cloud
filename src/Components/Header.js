@@ -124,7 +124,6 @@ function DropdownMenu(props) {
     const { logout, isUserRole, user } = useContext(Context);
     return user ? (<div className="dropdown-menu">
         <Link to={isUserRole(1) ? `/collaborators/${user._id}` : "/me"} className="dropdown-menu-element">Profile</Link>
-        <div className="dropdown-menu-element">Settings</div>
         <div className="dropdown-menu-element" onClick={logout}>Log out</div>
     </div>) : null
 }

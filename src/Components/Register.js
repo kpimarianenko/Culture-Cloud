@@ -25,21 +25,21 @@ export default function Register() {
           email: {
             email: true,
             required: true,
-            max: 256,
-            min: 4,
+            maxlen: 256,
+            minlen: 4,
           },
           firstname: {
             required: true,
-            max: 64,
+            maxlen: 64,
           },
           lastname: {
             required: true,
-            max: 64,
+            maxlen: 64,
           },
           password: {
             required: true,
-            max: 64,
-            min: 8,
+            maxlen: 64,
+            minlen: 8,
           },
           repeatPassword: {
             required: true,
@@ -61,16 +61,16 @@ export default function Register() {
           },
           placeName: {
             required: true,
-            max: 64,
+            maxlen: 64,
           },
           city: {
             required: true,
-            max: 64,
+            maxlen: 64,
           },
           about: {
             required: true,
-            min: 20,
-            max: 750,
+            minlen: 20,
+            maxlen: 750,
           }
         }
       })

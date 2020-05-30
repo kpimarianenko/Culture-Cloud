@@ -21,16 +21,15 @@ module.exports.sha512 = function sha512(password, salt) {
 
 module.exports.serverError = function(res) {
     return err => {
+        console.log(err.toString())
         res.status(500).json(this.error500)
     }
 }
 
 module.exports.error500 = {
-    message: "Internal server error",
-    // status: 500
+    message: "Internal server error"
 }
 
 module.exports.error404 = {
-    message: "Not found",
-    // status: 404
+    message: "Not found"
 }
