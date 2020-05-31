@@ -15,7 +15,8 @@ export default function Login() {
   const [formErrors, setFormErrors] = useState({});
   const history = useHistory();
 
-    const validate = FormValidator.setOptions({
+  const validator = new FormValidator()
+  const validate = validator.setOptions({
       fields: {
         email: {
           required: true,
@@ -77,11 +78,12 @@ export default function Login() {
         return HTTP.loginByGoogle(loginFormData)
         })
         .then(tokenData => {
-          localStorage.setItem('token', tokenData.token)
+          console.log(tokenData.data.token)
+          localStorage.setItem('token', tokenData.data.token)
           return HTTP.getProfile()
         })
         .then(authData => {
-          renderUser(authData.user)
+          renderUser(authData.data.user)
           history.push('/')
         })
         .catch(err => setErrorMessage(err.toString()))

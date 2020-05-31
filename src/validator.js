@@ -1,101 +1,59 @@
 export default class FormValidator {
     static classicError = {
         required: 'This field cannot be empty',
-        length: 'Field must contains this number of characters:',
+        length: 'Field must contains concrete numbers of characters',
         cardExpDate: 'Date must be in format (MM/YY)',
         email: 'Incorrect email',
         int: 'This field can contains integer numbers only',
-        price: 'Price must be in format X.XX',
+        price: 'Invalid format for price',
         match: "Passwords doesn't match",
-        minlen: 'Field must contains at least this number of characters:',
-        maxlen: 'Field must contains not more than this number of characters:',
-        min: 'Number is too small. Minimum:',
-        max: 'Number is too big. Maximum:',
+        minlen: 'Field is too short',
+        maxlen: 'Field is too long',
+        min: 'Number is too small',
+        max: 'Number is too big',
     }
     
-    static setOptions(options) {
+    setOptions(options) {
         this.fields = options.fields || {};
         this.errors = options.errors || {};
         return this.validate;
     }
 
-    static validateField(name) {
+    validateField(name) {
         const target = document.querySelector(`[name="${name}"]`);
         if (!target) return;
         const value = target.value;
         const field = this.fields[name.toString()];
-        if (field.required) {
-            if (!value) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].required : null;
-                return error || this.classicError.required;
-            }
-        }
-        if (field.minlen) {
-            if (value.length < field.minlen) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].minlen : null;
-                return error || `${this.classicError.minlen} ${field.minlen}`;
-            }
-        }
-        if (field.maxlen) {
-            if (value.length > field.maxlen) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].maxlen : null;
-                return error || `${this.classicError.maxlen} ${field.maxlen}`;
-            }
-        }
-        if (field.length) {
-            if (value.length !== field.length) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].length : null;
-                return error || `${this.classicError.length} ${field.length}`;
-            }
-        }
-        if (field.email) {
-            if (!value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].email : null;
-                return error || this.classicError.email;
-            }
-        }
-        if (field.cardExpDate) {
-            if (!value.match(/^\d{2}\/\d{2}$/)) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].cardExpDate : null;
-                return error || this.classicError.cardExpDate;
-            }
-        }
-        if (field.int) {
-            if (!value.match(/^[0-9]*$/)) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].int : null;
-                return error || this.classicError.int;
-            }
-        }
-        if (field.price) {
-            if (!value.match(/^\d+(.\d{1,2})?$/)) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].price : null;
-                return error || this.classicError.price;
-            }
-        }
+        if (field.required && !value) return this.getError(name, 'required')
+        if (field.minlen && value.length < field.minlen) return this.getError(name, 'minlen')
+        if (field.maxlen && value.length > field.maxlen) return this.getError(name, 'maxlen')
+        if (field.length && value.length !== field.length) return this.getError(name, 'length')
+        if (field.email && !value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) return this.getError(name, 'email')
+        if (field.cardExpDate && !value.match(/^\d{2}\/\d{2}$/)) return this.getError(name, 'cardExpDate')
+        if (field.int && !value.match(/^[0-9]*$/)) return this.getError(name, 'int')
+        if (field.price && !value.match(/^(\d+(.\d{1,2})?)?$/)) return this.getError(name, 'price')
+        if (field.max && value > field.max) return this.getError(name, 'max')
+        if (field.min && value < field.min) return this.getError(name, 'min')
         if (field.match) {
-            const input = document.querySelector(`input[name="${field.match}"]`);
-            if (input) {
-                if (input.value !== value) {
-                    let error = this.errors[name.toString()] ? this.errors[name.toString()].match : null;
-                    return error || this.classicError.match;
-                }
-            }
+            const input = document.getElementsByName(field.match)[0];
+            if (input && input.value !== value) return this.getError(name, 'match')
         }
-        if (field.max) {
-            if (value > field.max) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].max : null;
-                return error || `${this.classicError.max} ${field.max}`;
-            }
+        if (field.lt) {
+            const input = document.getElementsByName(field.lt)[0];
+            if (input && parseFloat(input.value) < parseFloat(value)) return this.getError(name, 'min')
         }
-        if (field.min) {
-            if (value < field.min) {
-                let error = this.errors[name.toString()] ? this.errors[name.toString()].min : null;
-                return error || `${this.classicError.min} ${field.min}`;
-            }
+        if (field.gt) {
+            const input = document.getElementsByName(field.gt)[0];
+            if (input && parseFloat(input.value) > parseFloat(value)) return this.getError(name, 'max')
         }
     }
 
-    static validate = () => {
+    getError(fieldName, option) {
+        let error = this.errors[fieldName.toString()] ? this.errors[fieldName.toString()][option] : null;
+        return error || FormValidator.classicError[option];
+    }
+
+    validate = () => {
         const response = {
             error: {},
             formValid: true,
@@ -104,7 +62,7 @@ export default class FormValidator {
         const fields = Object.keys(this.fields);
 
         fields.forEach(fieldName => {
-            const error = FormValidator.validateField(fieldName);
+            const error = this.validateField(fieldName);
             if (error) {
                 response.formValid = false;
                 response.error[fieldName] = error
@@ -114,16 +72,3 @@ export default class FormValidator {
         return response;
     }
 }
-
-// options: {
-//     email: {
-//         minlen: 8,
-//         maxlen: 20,
-//         email: true,
-//         required: true
-//     },
-//     password: {
-//         minlen: 6,
-//         required: true
-//     }
-// }

@@ -20,7 +20,8 @@ export default function Register() {
     const [formErrors, setFormErrors] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
 
-    const validate = FormValidator.setOptions({
+    const validator = new FormValidator()
+    const validate = validator.setOptions({
         fields: {
           email: {
             email: true,

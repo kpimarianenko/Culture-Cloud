@@ -16,9 +16,9 @@ export default function Excursions() {
     const [modal, setModal] = useState(false);
     const [buyExcursion, setBuyExcursion] = useState()
     const [formErrors, setFormErrors] = useState({})
-    // const [popUpsQuantity, setPopUpsQuantity] = useState(0)
 
-    const validate = FormValidator.setOptions({
+    const validator = new FormValidator()
+    const validate = validator.setOptions({
         fields: {
             firstName: {
                 required: true,
@@ -42,14 +42,6 @@ export default function Excursions() {
                 int: true,
                 length: 3,
             }
-        },
-        errors: {
-          email: {
-            required: 'Email cannot be empty'
-          },
-          password: {
-            required: 'Password cannot be empty'
-          }
         }
     })
 
@@ -115,11 +107,11 @@ export default function Excursions() {
         <div className="main">
             <div>
                 <Filters onSubmit={filterSubmitHandler} id="filters" >
+                    <FormSection title="Search" placeholder="Enter name of excursion" name="search" />
                     <FilterSection title="Price">
                         <FormSection title="From" placeholder="From" name="from" />
                         <FormSection title="To" placeholder="To" name="to" />
                     </FilterSection>
-                    <FormSection title="Search" placeholder="Enter name of excursion" name="search" />
                 </Filters>
             </div>
             {excursions ? <ExcursionsList setBuyExcursion={setBuyExcursion} setModal={setModal} excursions={excursions}>
@@ -141,7 +133,6 @@ export default function Excursions() {
                           <FormSection message={formErrors.expDate} onChange={handleInput} title="Expiration date" placeholder="Enter expiration date" name="expDate" />
                       </form>
                 </ModalWindow> : null}
-                {/* <PopUps reduceQuantity={() => {setPopUpsQuantity(popUpsQuantity-1)}} quantity={popUpsQuantity} text="Ticket purchased!" /> */}
             </ExcursionsList> : <Loader display />}
         </div>
     )
@@ -151,7 +142,7 @@ function ExcursionsList(props) {
     const { excursions, setModal, setBuyExcursion, children } = props;
     const [excursionsComponents, setExcursionsComponents] = useState()
 
-    const mapexcursions = (excurs) => {
+    const mapExcursions = (excurs) => {
         return excurs.map(excursion => 
             <Entity 
             id={excursion._id}
@@ -166,7 +157,8 @@ function ExcursionsList(props) {
     }
 
     useEffect(() => {
-        setExcursionsComponents(mapexcursions(excursions))
+        setExcursionsComponents(mapExcursions(excursions))
+        // eslint-disable-next-line
     }, [excursions])
 
     return (

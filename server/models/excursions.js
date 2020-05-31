@@ -67,9 +67,9 @@ module.exports = class Excursion {
 
 function formPriceOptions(from, to, options) {
     const priceOptions = {}
-    if (from)
+    if (parseFloat(from))
         priceOptions.$gte = from;
-    if (to)
+    if (parseFloat(to))
         priceOptions.$lte = to;
     if (priceOptions.$gte || priceOptions.$lte)
         options.price = priceOptions;

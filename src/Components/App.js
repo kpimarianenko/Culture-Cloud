@@ -10,7 +10,7 @@ function App(props) {
     const [user, setUser] = useState();
 
     const logout = function() {
-      localStorage.setItem('token', null)
+      localStorage.setItem('token', '')
       setUser(null);
     }
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { Context } from '../context'
 import { Link, Redirect } from 'react-router-dom';
 import { Loader } from './Utilities';
@@ -7,9 +7,14 @@ import Error from './Error'
 export default function Me() {
     const context = useContext(Context)
     const { user, isUserRole, isAuth } = context;
+    const [isAuthenticated , setIsAuthenticated] = useState(isAuth())
+
+    useEffect(() => {
+        setIsAuthenticated(isAuth())
+    }, [user, isAuth])
 
     if (isUserRole(1)) return <Redirect to={`/collaborators/${user._id}`} />
-    else if (isAuth()) return <Error code="401" message="Unauthorized" />
+    else if (!isAuthenticated) return <Error code="401" message="Unauthorized" />
     return user ? (<Profile name={user.name} avaUrl={user.avaUrl} about={user.about} />) : (<Loader display />)
 }
 

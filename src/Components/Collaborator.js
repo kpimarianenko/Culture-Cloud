@@ -7,15 +7,18 @@ import { Context } from '../context'
 import FormValidator from '../validator';
 import { Profile } from './Me'
 import Error from './Error';
+import Filters, { FilterSection } from './Filters';
 
 export default function Collaborator(props) {
     const { user } = useContext(Context)
     const { id } = props.match.params;
 
-    const [formErrors, setFormErrors] = useState({})
+    const [modalErrors, setModalErrors] = useState({})
+    const [filtersErrors, setFiltersErrors] = useState({})
     const [modal, setModal] = useState(false)
     const [collaborator, setCollaborator] = useState()
     const [excursions, setExcursions] = useState()
+    const [filteredExcursions, setFilteredExcursions] = useState()
     const [page, setPage] = useState(1)
     const [maxPage, setMaxPage] = useState(1)
     const [errorCode, setErrorCode] = useState(0)
@@ -23,7 +26,8 @@ export default function Collaborator(props) {
 
     const quantity = 10;
 
-    const validate = FormValidator.setOptions({
+    const modalValidator = new FormValidator()
+    const validateModal = modalValidator.setOptions({
         fields: {
           name: {
             maxlen: 64,
@@ -58,8 +62,28 @@ export default function Collaborator(props) {
     })
 
     const handleInput = function(){
-        const response = validate();
-        setFormErrors(response.error)
+        const response = validateModal();
+        setModalErrors(response.error)
+        return response.formValid;
+    }
+
+    const filtersValidator = new FormValidator()
+    const validateFilters = filtersValidator.setOptions({
+        fields: {
+            from: {
+                lt: 'to',
+                price: true
+            },
+            to: {
+                gt: 'from',
+                price: true
+            }
+        }
+    })
+
+    const handleFiltersInput = function(){
+        const response = validateFilters();
+        setFiltersErrors(response.error)
         return response.formValid;
     }
 
@@ -73,15 +97,16 @@ export default function Collaborator(props) {
             }
             setCollaborator(response[0].data)
             setExcursions(response[1].data)
+            setFilteredExcursions(response[1].data)
         })
         .catch(() => setErrorCode(500))
     }, [id])
 
     useEffect(() => {
-        if (!excursions) return;
-        const maxPage = Math.ceil(excursions.length / quantity) || 1
+        if (!filteredExcursions) return;
+        const maxPage = Math.ceil(filteredExcursions.length / quantity) || 1
         setMaxPage(maxPage)
-    }, [excursions])
+    }, [filteredExcursions])
 
     const prev = () => {
         setPage(page - 1)
@@ -92,9 +117,9 @@ export default function Collaborator(props) {
     }
 
     const addExcursion = (e) => {
-        setExcursions(null)
         e.preventDefault(); 
         if (handleInput()) {
+            setExcursions(null)
             setModal(false);
             HTTP.addExcursion('add-excursion')
             .then((response) => {
@@ -110,14 +135,72 @@ export default function Collaborator(props) {
             .catch(() => setErrorCode(500))
         }
     }
+
+    const applyFilters = (e) => {
+        e.preventDefault()
+        if (handleFiltersInput()) {
+            setFilteredExcursions(null)
+            const from = document.getElementsByName('from')[0].value;
+            const to = document.getElementsByName('to')[0].value;
+            const search = document.getElementsByName('search')[0].value;
+            const sort = document.getElementsByName('sort')[0].value;
+            
+            const filteredExcursions = filterExcursion(excursions, {from, to, search});
+            const sortedExcursions = sortByPrice(filteredExcursions, sort)
+            setFilteredExcursions(sortedExcursions)
+            
+            setPage(1)
+        }
+    }
+
+    const sortByPrice = (excursions, by) => {
+        excursions.sort(function(a, b) {
+            if (by === "asc")
+                return a.price - b.price;
+            return b.price - a.price;
+        });
+        return excursions;
+    }
+
+    const filterExcursion = (excursions, filters) => {
+        const { from, to, search } = filters;
+        console.log(search)
+        const newExcursions = [];
+        excursions.forEach(element => {
+            const isSearchIncludes = element.name.toLowerCase().includes(search.toLowerCase() || "");
+            const isGTEFrom = from ? (element.price >= from) : true;
+            const isLTETo = to ? (element.price <= to) : true;
+            if (isSearchIncludes && isGTEFrom && isLTETo)
+                newExcursions.push(element)
+        });
+        return newExcursions;
+    }
     
     if (errorCode) return <Error code={errorCode} message={errorMessage} />
     return collaborator ? (
         <Profile type={collaborator.type} userId={collaborator._id} name={collaborator.name} avaUrl={collaborator.avaUrl} about={collaborator.about}>
-            { excursions ? <Excursions excursions={excursions ? excursions.slice(quantity * (page - 1), quantity * (page - 1) + quantity) : excursions}>
-                {user && user._id === id ? <AddExcursion onClick={() => {setModal(true)}} /> : null}
-                <Pagination onPrev={prev} onNext={next} page={page} maxPage={maxPage} />
-            </Excursions> : <Loader display />}
+            <h2>Excursions</h2>
+            <div className="excursions-outer">
+                <div>
+                    <Filters id="filters" onSubmit={applyFilters} >
+                        <FormSection title="Search" placeholder="Enter name of excursion" name="search" />
+                        <FilterSection title="Price">
+                            <FormSection message={filtersErrors.from} onChange={handleFiltersInput}  title="From" placeholder="From" name="from" />
+                            <FormSection message={filtersErrors.to} onChange={handleFiltersInput} title="To" placeholder="To" name="to" />
+                        </FilterSection>
+                        <FilterSection title="Sort">
+                        <select name="sort">
+                            <option value="asc">By ascending</option>
+                            <option value="desc">By descending</option>
+                        </select>
+                        </FilterSection>
+                    </Filters>
+                </div>
+                { filteredExcursions ? <Excursions excursions={filteredExcursions ? filteredExcursions.slice(quantity * (page - 1), quantity * (page - 1) + quantity) : filteredExcursions}>
+                    {user && user._id === id ? <AddExcursion onClick={() => {setModal(true)}} /> : null}
+                    <Pagination onPrev={prev} onNext={next} page={page} maxPage={maxPage} />
+                </Excursions> : <Loader display />}
+            </div>
             <ModalWindow 
               onCancel={() => {setModal(false)}} 
               display={modal}
@@ -125,9 +208,9 @@ export default function Collaborator(props) {
               form="add-excursion"
               acceptButtonText="Add">
                 <form id="add-excursion" encType="multipart/form-data" className="form" onSubmit={addExcursion}>
-                    <FormSection message={formErrors.name} onChange={handleInput} title="Name" placeholder="Enter name" name="name" />
-                    <FormSection message={formErrors.price} onChange={handleInput} title="Price" placeholder="Enter price" name="price" />
-                    <FormSection message={formErrors.about} onChange={handleInput} title="About" placeholder="Enter information about excursion" name="about" textarea />
+                    <FormSection message={modalErrors.name} onChange={handleInput} title="Name" placeholder="Enter name" name="name" />
+                    <FormSection message={modalErrors.price} onChange={handleInput} title="Price" placeholder="Enter price" name="price" />
+                    <FormSection message={modalErrors.about} onChange={handleInput} title="About" placeholder="Enter information about excursion" name="about" textarea />
                     <FormSection name="place" type="hidden" value={id}/>
                     <FormSection onChange={handleInput} title="Choose photo (optional)" name="avatar" type="file" />
                 </form>
@@ -138,7 +221,7 @@ export default function Collaborator(props) {
 
 function AddExcursion(props) {
     const { ...attrs } = props;
-    return ( <div {...attrs} className="btn-add_excursion">Додати екскурсію</div> )
+    return ( <div {...attrs} className="btn-add_excursion">Add excursion</div> )
 }
 
 function Excursions(props) {
@@ -154,7 +237,6 @@ function Excursions(props) {
 
     return excursions ? (
     <div className="excursions-wrapper">
-        <h2>Excursions</h2>
         <table className="excursions">
             <thead>
                 <tr>
@@ -182,7 +264,5 @@ function Excursion(props) {
 }
 
 function ExcursionsError() {
-    return (<div className="excursion message">
-        Нажаль цей заклад поки не додав екскурсій
-    </div>)
+    return (<div className="excursion message">No matches found</div>)
 }
