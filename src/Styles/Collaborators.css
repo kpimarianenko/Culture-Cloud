@@ -6,11 +6,6 @@
     margin: 20px;
 }
 
-.entities {
-    display: grid;
-    row-gap: 20px;
-}
-
 .main .caption {
     text-align: center;
 }
@@ -20,7 +15,12 @@
     max-height: 180px;
     overflow: hidden;
     display: flex;
+    margin-bottom: 20px;
     flex-direction: row;
+}
+
+.entity:last-child {
+    margin-bottom: 0;
 }
 
 .entity__header {

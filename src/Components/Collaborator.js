@@ -178,7 +178,7 @@ export default function Collaborator(props) {
     
     if (errorCode) return <Error code={errorCode} message={errorMessage} />
     return collaborator ? (
-        <Profile type={collaborator.type} userId={collaborator._id} name={collaborator.name} avaUrl={collaborator.avaUrl} about={collaborator.about}>
+        <Profile role={collaborator.role} type={collaborator.type} userId={collaborator._id} name={collaborator.placeName} avaUrl={collaborator.avaUrl} about={collaborator.about}>
             <h2>Excursions</h2>
             <div className="excursions-outer">
                 <div>

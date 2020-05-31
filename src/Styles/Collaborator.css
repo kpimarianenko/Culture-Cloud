@@ -112,6 +112,16 @@
     grid-gap: 20px;
 }
 
+.gallery {
+    margin: auto;
+}
+
+.gallery-outer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
 @media screen and (max-width: 680px) {
     .collaborator-page .ava {
         width: 100%;

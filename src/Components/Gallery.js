@@ -60,8 +60,10 @@ function PhotoList(props) {
         }
     }, [gallery])
 
-    return galleryElements ? (<div className="gallery">
-        {galleryElements}
+    return galleryElements ? (<div className="gallery-outer">
+        <div className="gallery">
+            {galleryElements}
+        </div>
     </div>) : <Loader display />
 }
 

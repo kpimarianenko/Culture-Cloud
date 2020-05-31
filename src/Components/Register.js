@@ -71,7 +71,7 @@ export default function Register() {
           about: {
             required: true,
             minlen: 20,
-            maxlen: 750,
+            maxlen: 1500,
           }
         }
       })
