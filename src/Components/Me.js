@@ -19,7 +19,6 @@ export default function Me() {
 }
 
 export function Profile(props) {
-    const context = useContext(Context)
     const { avaUrl, userId, name, type, about, children, role } = props
     return (<div className="card collaborator-page">
         <div className="info">

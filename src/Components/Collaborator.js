@@ -120,6 +120,7 @@ export default function Collaborator(props) {
         e.preventDefault(); 
         if (handleInput()) {
             setExcursions(null)
+            setFilteredExcursions(null)
             setModal(false);
             HTTP.addExcursion('add-excursion')
             .then((response) => {
@@ -131,6 +132,7 @@ export default function Collaborator(props) {
                 if (response.status !== 200)
                     setErrorCode(response.status)
                 setExcursions(response.data)
+                setFilters();
             })
             .catch(() => setErrorCode(500))
         }
@@ -138,6 +140,10 @@ export default function Collaborator(props) {
 
     const applyFilters = (e) => {
         e.preventDefault()
+        setFilters();
+    }
+
+    const setFilters = () => {
         if (handleFiltersInput()) {
             setFilteredExcursions(null)
             const from = document.getElementsByName('from')[0].value;
@@ -164,7 +170,6 @@ export default function Collaborator(props) {
 
     const filterExcursion = (excursions, filters) => {
         const { from, to, search } = filters;
-        console.log(search)
         const newExcursions = [];
         excursions.forEach(element => {
             const isSearchIncludes = element.name.toLowerCase().includes(search.toLowerCase() || "");
