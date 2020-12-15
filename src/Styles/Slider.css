@@ -101,6 +101,7 @@
         transform: scale(1);
     }
 }
+
 .controls-inner > * {
     cursor: pointer;
 }
