@@ -16,9 +16,9 @@ export default function About() {
                 <Role role="Developer" name={dev2} />
                 <Role role="Designer" name={dev2} />
                 <Role role="Composer" name={dev2} />
-                <Role role="Artist" name={dev2} />
-                <Role role="Producer" name={dev2} />
-                <Role role="PR-manager" name={dev2} />
+                <Role role="Artist" name={dev1} />
+                <Role role="Producer" name={dev1} />
+                <Role role="PR-manager" name={dev1} />
                 <Role role="BD-specialist" name={dev2} />
                 <Role role="Just good man" name={dev2} />
                 <Role role="Muse" name={dev1} />
@@ -29,9 +29,9 @@ export default function About() {
 
 function Info() {
     return (<p className="info">
-    Hey. We are second-year students of the Kiev Polytechnic Institute
+    Hey. We are third-year students of the Kiev Polytechnic Institute
     named after Igor Sikorsky. We study at the faculty of applied
-    mathematics and "together" develop this project. Below, in the
+    mathematics and together develop this project. Below, in the
     photos you can see us.
     </p>)
 }

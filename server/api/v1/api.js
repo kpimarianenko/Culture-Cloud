@@ -34,4 +34,7 @@ router.use('/collaborators', collaboratorsRouter);
 const excursionsRouter = require('./routes/excursions');
 router.use('/excursions', excursionsRouter);
 
+const exhibitsRouter = require('./routes/exhibits');
+router.use('/exhibits', exhibitsRouter);
+
 module.exports = router;

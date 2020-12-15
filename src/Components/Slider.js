@@ -45,10 +45,10 @@ export default function Slider(props) {
   return (
     <div id="main">
       <div className="slider">
-        <Slide title="Vstavliu tut cho-to krasivoe i mb dlinnoe" caption="Lorem ipsum tudim sudim" active index={1} />
-        <Slide title="Bla-bla-bla-bla-bla" caption="Lorem ipsum tudim sudim" index={2} />
-        <Slide title="i tut tozhe bla-bla-bla)00" caption="Lorem ipsum tudim sudim" index={3} />
-        <Slide title="Nu pozhalui i tut bla-bla-bla!" caption="Lorem ipsum tudim sudim" index={4} />
+        <Slide title="Great excitement!" caption="Discover something interesting and new" active index={1} />
+        <Slide title="Fast and Beauty" caption="Use your gadjet with comfort" index={2} />
+        <Slide title="New technology from tommorow but today" caption="Best cloud services in your hands" index={3} />
+        <Slide title="The best or nothing!" caption="All we do is for you" index={4} />
         <Controls slider={slider}/>
       </div>
     </div>
