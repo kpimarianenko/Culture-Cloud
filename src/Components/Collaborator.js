@@ -15,7 +15,8 @@ export default function Collaborator(props) {
 
     const [modalErrors, setModalErrors] = useState({})
     const [filtersErrors, setFiltersErrors] = useState({})
-    const [modal, setModal] = useState(false)
+    const [excModal, setExcursionModal] = useState(false)
+    const [exhModal, setExhibitModal] = useState(false)
     const [collaborator, setCollaborator] = useState()
     const [excursions, setExcursions] = useState()
     const [filteredExcursions, setFilteredExcursions] = useState()
@@ -43,6 +44,9 @@ export default function Collaborator(props) {
             required: true,
             minlen: 20,
             maxlen: 500
+          },
+          url: {
+            required: true,
           }
         },
         errors: {
@@ -121,7 +125,7 @@ export default function Collaborator(props) {
         if (handleInput()) {
             setExcursions(null)
             setFilteredExcursions(null)
-            setModal(false);
+            setExcursionModal(false);
             HTTP.addExcursion('add-excursion')
             .then((response) => {
                 if (response.status !== 200)
@@ -135,6 +139,32 @@ export default function Collaborator(props) {
                 setFilters();
             })
             .catch(() => setErrorCode(500))
+        }
+    }
+
+    const addExhibit = (e) => {
+        e.preventDefault(); 
+        if (handleInput()) {
+            setExhibitModal(false);
+            HTTP.addExhibit()
+            .then(response => {
+                console.log(response);
+            })
+            .catch(() => setErrorCode(500))
+
+            // HTTP.addExcursion('add-excursion')
+            // .then((response) => {
+            //     if (response.status !== 200)
+            //         setErrorCode(response.status)
+            //     return HTTP.getCollaboratorsExcursions(id)
+            // })
+            // .then(response => {
+            //     if (response.status !== 200)
+            //         setErrorCode(response.status)
+            //     setExcursions(response.data)
+            //     setFilters();
+            // })
+            // .catch(() => setErrorCode(500))
         }
     }
 
@@ -202,22 +232,40 @@ export default function Collaborator(props) {
                     </Filters>
                 </div>
                 { filteredExcursions ? <Excursions excursions={filteredExcursions ? filteredExcursions.slice(quantity * (page - 1), quantity * (page - 1) + quantity) : filteredExcursions}>
-                    {user && user._id === id ? <AddExcursion onClick={() => {setModal(true)}} /> : null}
+                    {user && user._id === id ? <AddExcursion onClick={() => {setExcursionModal(true)}} /> : null}
+                    {user && user._id === id ? <AddExhibit onClick={() => {setExhibitModal(true)}} /> : null}
                     <Pagination onPrev={prev} onNext={next} page={page} maxPage={maxPage} />
                 </Excursions> : <Loader display />}
             </div>
             <ModalWindow 
-              onCancel={() => {setModal(false)}} 
-              display={modal}
+              onCancel={() => {setExcursionModal(false)}} 
+              display={excModal}
               header="Add a new excursion"
               form="add-excursion"
               acceptButtonText="Add">
                 <form id="add-excursion" encType="multipart/form-data" className="form" onSubmit={addExcursion}>
                     <FormSection message={modalErrors.name} onChange={handleInput} title="Name" placeholder="Enter name" name="name" />
                     <FormSection message={modalErrors.price} onChange={handleInput} title="Price" placeholder="Enter price" name="price" />
-                    <FormSection message={modalErrors.about} onChange={handleInput} title="About" placeholder="Enter information about excursion" name="about" textarea />
+                    <FormSection message={modalErrors.about} onChange={handleInput} title="About" placeholder="Enter information about description" name="about" textarea />
                     <FormSection name="place" type="hidden" value={id}/>
                     <FormSection onChange={handleInput} title="Choose photo (optional)" name="avatar" type="file" />
+                </form>
+            </ModalWindow>
+            <ModalWindow 
+              onCancel={() => {setExhibitModal(false)}} 
+              display={exhModal}
+              header="Add a new exhibit"
+              form="add-exhibit"
+              acceptButtonText="Add">
+                <form id="add-exhibit" encType="multipart/form-data" className="form" onSubmit={addExhibit}>
+                    <FormSection message={modalErrors.name} onChange={handleInput} title="Name" placeholder="Enter name" name="name" />
+                    <FormSection message={modalErrors.url} onChange={handleInput} title="Url" placeholder="Enter content url" name="url" />
+                    <input type="radio" id="pic" name="isPicture" value="1" checked={true} />
+                    <label for="pic">Picture</label><br/>
+                    <input type="radio" id="vid" name="isPicture" value="0" />
+                    <label for="vid">Video</label><br/>
+                    <FormSection message={modalErrors.about} onChange={handleInput} title="Description" placeholder="Enter Description" name="description" textarea />
+                    <FormSection name="place" type="hidden" value={id}/>
                 </form>
             </ModalWindow>
         </Profile>
@@ -227,6 +275,11 @@ export default function Collaborator(props) {
 function AddExcursion(props) {
     const { ...attrs } = props;
     return ( <div {...attrs} className="btn-add_excursion">Add excursion</div> )
+}
+
+function AddExhibit(props) {
+    const { ...attrs } = props;
+    return ( <div {...attrs} className="btn-add_excursion">Add exhibit</div> )
 }
 
 function Excursions(props) {

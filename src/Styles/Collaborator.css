@@ -67,10 +67,13 @@
     color: #dfdfdf;
     line-height: unset;
     vertical-align: center;
-    margin-bottom: 10px;
     padding: 10px;
     border: 1.5px solid #dfdfdf;
     border-top: 0;
+}
+
+.btn-add_excursion:last-child {
+    margin-bottom: 10px;
 }
 
 .btn-add_excursion:hover {
