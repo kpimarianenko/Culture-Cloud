@@ -9,10 +9,10 @@ router.get('/', function (req, res) {
             res.json({
                 exhibits: response.map(el => {
                     return {
-                        name = el.name,
-                        url = elurl,
-                        isVideo = elisVideo,
-                        text = eltext,
+                        name: el.name,
+                        url: el.url,
+                        isPicture: el.isPicture,
+                        text: el.text,
                     }
                 }),
             })
@@ -25,7 +25,7 @@ router.post('/new', function (req, res) {
     const name = req.body.name;
     const url = req.body.url;
     let isPicture = true;
-    if(req.body.isPicture==0){
+    if(req.body.isPicture == 0){
         isPicture = false;
     }
     const text = req.body.text;

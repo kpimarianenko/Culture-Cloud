@@ -10,7 +10,7 @@ const ExhibitSchema = {
 const ExcursionModel = mongoose.model('Exhibit', ExhibitSchema);
 
 module.exports = class Excursion {
-    constructor(name, url, isVideo, text) {
+    constructor(name, url, isPicture, text) {
         this.name = name;
         this.url = url;
         this.isPicture = isPicture;
