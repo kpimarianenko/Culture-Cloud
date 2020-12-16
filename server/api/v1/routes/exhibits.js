@@ -4,7 +4,7 @@ const utils = require('../../../utils');
 const Exhibit = require('../../../models/exhibit');
 
 router.get('/', function (req, res) {
-    Exhibit.get()
+    Exhibit.getAll()
         .then(response => {
             res.json({
                 exhibits: response.map(el => {
@@ -16,7 +16,6 @@ router.get('/', function (req, res) {
                     }
                 }),
             })
-
         })
         .catch(utils.serverError(res));
 });
@@ -31,7 +30,7 @@ router.post('/new', function (req, res) {
     const text = req.body.text;
     const exhibit = new Exhibit(name, url, isPicture, text);
     Exhibit.add(exhibit)
-    .then(res.status(200)).catch(res.status(200))
+    .then(() => res.send({})).catch(res.status(200))
 })
 
 module.exports = router;

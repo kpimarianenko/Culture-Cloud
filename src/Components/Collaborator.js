@@ -145,12 +145,16 @@ export default function Collaborator(props) {
     const addExhibit = (e) => {
         e.preventDefault(); 
         if (handleInput()) {
+            console.log("oK")
             setExhibitModal(false);
-            HTTP.addExhibit()
+            HTTP.addExhibit('add-exhibit')
             .then(response => {
                 console.log(response);
             })
-            .catch(() => setErrorCode(500))
+            .catch((e) => {
+                console.log(e)
+                setErrorCode(500)
+            })
 
             // HTTP.addExcursion('add-excursion')
             // .then((response) => {
@@ -261,9 +265,9 @@ export default function Collaborator(props) {
                     <FormSection message={modalErrors.name} onChange={handleInput} title="Name" placeholder="Enter name" name="name" />
                     <FormSection message={modalErrors.url} onChange={handleInput} title="Url" placeholder="Enter content url" name="url" />
                     <input type="radio" id="pic" name="isPicture" value="1" checked={true} />
-                    <label for="pic">Picture</label><br/>
+                    <label htmlFor="pic">Picture</label><br/>
                     <input type="radio" id="vid" name="isPicture" value="0" />
-                    <label for="vid">Video</label><br/>
+                    <label htmlFor="vid">Video</label><br/>
                     <FormSection message={modalErrors.about} onChange={handleInput} title="Description" placeholder="Enter Description" name="description" textarea />
                     <FormSection name="place" type="hidden" value={id}/>
                 </form>
