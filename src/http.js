@@ -69,6 +69,10 @@ export default class HTTP {
         return this.post(`${project.dev.hostname}/api/v1/exhibits/new`, formID)
     }
 
+    static getExhibits() {
+        return this.get(`${project.dev.hostname}/api/v1/exhibits`)
+    }
+
     static getCollaboratorsExcursions(collabID) {
         return this.get(`${project.dev.hostname}/api/v1/excursions/collaborators/${collabID}`)
     }

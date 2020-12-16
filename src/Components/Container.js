@@ -6,6 +6,7 @@ import Slider from './Slider';
 import Login from './Login';
 import Error from './Error'
 import About from './About';
+import Demo from './Demo';
 import Me from './Me';
 import Register from './Register';
 import Excursions from './Excursions';
@@ -20,6 +21,7 @@ export default function Container(props) {
                 <Route exact path='/contacts' component={Contacts}/>
                 <Route exact path='/excursions' component={Excursions}/>
                 <Route exact path='/about' component={About}/>
+                <Route exact path='/demo' component={Demo}/>
                 <Route exact path='/collaborators' component={Collaborators}/>
                 <Route exact path='/collaborators/:id' component={Collaborator} />
                 <Route exact path='/collaborators/gallery/:id' component={Gallery} />

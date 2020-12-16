@@ -80,6 +80,7 @@ function Navigation(props) {
         <Link className="nav-element" to="/collaborators">With us</Link>
         <Link className="nav-element" to="/excursions">Excursions</Link>
         <Link className="nav-element" to="/contacts">Contacts</Link>
+        <Link className="nav-element" to="/demo">Demo</Link>
         <Link className="nav-element" to="/about">About</Link>
     </div>)
 }

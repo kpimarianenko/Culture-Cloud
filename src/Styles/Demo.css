@@ -1,0 +1,72 @@
+
+.exhibits-plot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.exhibits-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    width: 30vw;
+
+    height: 7.5em;
+    border: 1px solid black;
+    margin-bottom: 1em;
+}
+
+.exhibits-plot h3{
+    font-size: 2em;
+}
+
+.exhibit{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 60vw;
+    min-height: 20em;
+    margin-bottom: 1em;
+    padding: 0.2em;
+}
+
+.exhibit img {
+    width: 50vw;
+    border-radius: 2%;
+}
+.exhibit iframe {
+    width: 50vw;
+    height: 35vw;
+    margin-bottom: 1em;
+}
+
+.exhibit p{
+    width: 40vw;
+    color: rgb(68, 68, 68);
+    font-size: medium;
+    margin-bottom: 1em;
+}
+@media (max-width: 1000px) {
+    .exhibit {
+        width: 80vw;
+    }
+    .exhibit p {
+        width: 70vw;
+    }
+    .exhibit img {
+        width: 75vw;
+    }
+    .exhibit iframe {
+        width: 75vw;
+        height: 45vw;
+    }
+    .exhibits-button-wrapper {
+        width: 80vw;
+    }
+}
+
+/* .exhibits-button-wrapper .btn{
+    background-color: rgb(218, 218, 218);
+} */

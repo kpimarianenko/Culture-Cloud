@@ -250,7 +250,7 @@ export default function Collaborator(props) {
                 <form id="add-excursion" encType="multipart/form-data" className="form" onSubmit={addExcursion}>
                     <FormSection message={modalErrors.name} onChange={handleInput} title="Name" placeholder="Enter name" name="name" />
                     <FormSection message={modalErrors.price} onChange={handleInput} title="Price" placeholder="Enter price" name="price" />
-                    <FormSection message={modalErrors.about} onChange={handleInput} title="About" placeholder="Enter information about description" name="about" textarea />
+                    <FormSection message={modalErrors.about} onChange={handleInput} title="About" placeholder="Enter information about excursion" name="about" textarea />
                     <FormSection name="place" type="hidden" value={id}/>
                     <FormSection onChange={handleInput} title="Choose photo (optional)" name="avatar" type="file" />
                 </form>
@@ -268,7 +268,7 @@ export default function Collaborator(props) {
                     <label htmlFor="pic">Picture</label><br/>
                     <input type="radio" id="vid" name="isPicture" value="0" />
                     <label htmlFor="vid">Video</label><br/>
-                    <FormSection message={modalErrors.about} onChange={handleInput} title="Description" placeholder="Enter Description" name="description" textarea />
+                    <FormSection message={modalErrors.about} onChange={handleInput} title="Description" placeholder="Enter Description" name="text" textarea />
                     <FormSection name="place" type="hidden" value={id}/>
                 </form>
             </ModalWindow>
