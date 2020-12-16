@@ -33,6 +33,9 @@ export default function Excursions() {
     }, [])
 
     const getExhibit = (exhibits, index)=>{
+        if(exhibits){
+            return <Loader display={true}/>
+        }
         const exhibit = exhibits.find(exhibit => exhibit.index == index);
         return <div class="exhibit card">
             {exhibit.isPicture ? <img src={exhibit.mediaUrl}></img> : <iframe src={exhibit.mediaUrl} allowFullScreen> </iframe>}
@@ -57,5 +60,5 @@ export default function Excursions() {
             </div>
             {getExhibit(exhibits, currentExhibit)}
         </div>
-    ): <Loader/>
+    ): <Loader display={true}/>
 }
