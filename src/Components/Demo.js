@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Filters, { FilterSection } from "./Filters"
-import Error from './Error'
-import ModalWindow from './ModalWindow'
-import { Pagination, Loader, FormSection, Entity, NothingFound } from "./Utilities"
+import { Loader } from "./Utilities"
 import HTTP from '../http';
-import FormValidator from '../validator'
 import '../Styles/Demo.css'
 
 export default function Excursions() {
@@ -33,12 +29,14 @@ export default function Excursions() {
     }, [])
 
     const getExhibit = (exhibits, index)=>{
-        if(exhibits){
+        if(!exhibits){
             return <Loader display={true}/>
         }
-        const exhibit = exhibits.find(exhibit => exhibit.index == index);
+        const exhibit = exhibits.find(exhibit => exhibit.index === index);
         return <div class="exhibit card">
-            {exhibit.isPicture ? <img src={exhibit.mediaUrl}></img> : <iframe src={exhibit.mediaUrl} allowFullScreen> </iframe>}
+            {exhibit.isPicture ?
+            <img src={exhibit.mediaUrl} alt={exhibit.name}></img> :
+            <iframe src={exhibit.mediaUrl} title={exhibit.name} allowFullScreen> </iframe>}
             <p>{exhibit.text}</p>
             
         </div>

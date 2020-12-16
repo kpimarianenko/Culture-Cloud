@@ -24,7 +24,7 @@ router.post('/new', function (req, res) {
     const name = req.body.name;
     const url = req.body.url;
     let isPicture = true;
-    if(req.body.isPicture == 0){
+    if(parseInt(req.body.isPicture) === 0){
         isPicture = false;
     }
     const text = req.body.text;

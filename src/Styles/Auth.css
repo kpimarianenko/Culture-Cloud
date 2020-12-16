@@ -85,6 +85,14 @@ div.error {
     margin-bottom: 5px;
 }
 
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    } to {
+        transform: rotate(360deg);
+    }
+}
+
 .loader {
   border-radius: 100%;
   border-top: 4px solid #e96559;
