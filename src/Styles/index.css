@@ -112,3 +112,10 @@ input.error::placeholder, textarea.error::placeholder {
 .link:hover {
   text-decoration: underline;
 }
+
+input[type="radio"] {
+  height: 15px;
+  width: 15px;
+  margin: 0;
+  margin-right: 5px;
+}
