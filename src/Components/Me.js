@@ -26,7 +26,7 @@ export function Profile(props) {
                 <div className="ava-wrapper">
                     <img className="card ava" src={avaUrl || "/images/placeholder.png"} alt="avatar"/>
                 </div>
-                {role === 1 ? <Link className="gallery-link" to={`/collaborators/gallery/${userId}`}>Gallery</Link> : null}
+                {/* {role === 1 ? <Link className="gallery-link" to={`/collaborators/gallery/${userId}`}>Gallery</Link> : null} */}
             </div>
             <div className="details">
                 <h2 className="name">{name}</h2>

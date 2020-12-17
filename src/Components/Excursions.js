@@ -119,18 +119,21 @@ export default function Excursions() {
                     <NothingFound values={excursions} />
                     <Pagination page={page} maxPage={maxPage} onPrev={onPrev} onNext={onNext} />
                 </div>
-                {buyExcursion ? <ModalWindow 
+                {buyExcursion ? <ModalWindow
+                    to="/demo"
                     onCancel={() => {setFormErrors({}); setModal(false)}} 
                     display={modal}
-                    header={`Buy ticket on ${buyExcursion.name}`}
+                    header="Enter temporary auth data"
                     form="buy-excursion"
-                    acceptButtonText={`Buy for ${buyExcursion.price}$`}>
-                      <form id="buy-excursion" encType="multipart/form-data" className="form" onSubmit={buyTicket} >
-                          <FormSection message={formErrors.firstName} onChange={handleInput} title="First name" placeholder="Enter first name" name="firstName" />
+                    acceptButtonText="Enter">
+                      <form id="buy-excursion" encType="multipart/form-data" className="form" >
+                          {/* <FormSection message={formErrors.firstName} onChange={handleInput} title="First name" placeholder="Enter first name" name="firstName" />
                           <FormSection message={formErrors.lastName} onChange={handleInput} title="Last name" placeholder="Enter last name" name="lastName" />
                           <FormSection message={formErrors.cardNumber} onChange={handleInput} title="Card number" placeholder="Enter card number" name="cardNumber" />
                           <FormSection message={formErrors.cvv} onChange={handleInput} title="Security code (CVV)" placeholder="Enter CVV" name="cvv" />
-                          <FormSection message={formErrors.expDate} onChange={handleInput} title="Expiration date" placeholder="Enter expiration date" name="expDate" />
+                          <FormSection message={formErrors.expDate} onChange={handleInput} title="Expiration date" placeholder="Enter expiration date" name="expDate" /> */}
+                          <FormSection title="Login" placeholder="Enter temporary login" name="firstName" />
+                          <FormSection title="Password" placeholder="Enter temporary password" name="lastName" />
                       </form>
                 </ModalWindow> : null}
             </ExcursionsList> : <Loader display />}
@@ -148,7 +151,7 @@ function ExcursionsList(props) {
             id={excursion._id}
             onClick={() => {setBuyExcursion(excursion); setModal(true)}}
             adds={`Price: ${excursion.price.toFixed(2)}$`}
-            buttonText="Buy ticket"
+            buttonText="Enter excursion"
             key={excursion._id}
             avaUrl={excursion.avaUrl}
             title={excursion.name}

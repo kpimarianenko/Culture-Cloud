@@ -13,10 +13,10 @@ export default function Register() {
     const simpleUserButtonText = "Register free account"
     const intPlaceButtonText = `Register for ${project.price}$ per month`
 
-    const [displayCardInputs, setDisplayCardInputs] = useState(false)
+    const [displayCardInputs, setDisplayCardInputs] = useState(true)
     const [displayLoader, setDisplayLoader] = useState(false)
     const [changeTypeText, setChangeTypeText] = useState(simpleUserText)
-    const [buttonText, setButtonText] = useState(simpleUserButtonText)
+    const [buttonText, setButtonText] = useState(intPlaceButtonText)
     const [formErrors, setFormErrors] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -108,7 +108,7 @@ export default function Register() {
             <div className="auth__bg auth__bg-register"></div>
             <div className="auth__window">
                 <h2>Create account</h2>
-                <p>{changeTypeText} <span onClick={changeType} className="link">Click here!</span></p>
+                {/* <p>{changeTypeText} <span onClick={changeType} className="link">Click here!</span></p> */}
                 <form id="register" action="http://localhost:4000/api/v1/auth/register" encType="multipart/form-data" method="POST" className="form" onSubmit={register}>
                     <div className="form-register">
                         <input required type="hidden" name="issimpleuser" value={!displayCardInputs}/>

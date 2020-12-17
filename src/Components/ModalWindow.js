@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import '../Styles/ModalWindow.css'
 
 export default function ModalWindow(props) {
-    const { header, acceptButtonText, cancelButtonText, display, onCancel, form, children, ...attrs} = props;
+    const { header, acceptButtonText, cancelButtonText, display, onCancel, form, children, to, ...attrs} = props;
 
     const onOutsideClickHadler = (event) => {
         if (event.target === event.currentTarget)
@@ -21,7 +22,8 @@ export default function ModalWindow(props) {
                 <div className="line"></div>
                 <div className="modal-footer">
                     <button onClick={onCancel} className="btn">{cancelButtonText || "Cancel"}</button>
-                    <button type="submit" form={form} className="btn btn-white btn-classic">{acceptButtonText || "OK"}</button>
+                    {to ? <Link to={to}><button className="btn btn-white btn-classic">{acceptButtonText || "OK"}</button></Link>
+                    : <button type="submit" form={form} className="btn btn-white btn-classic">{acceptButtonText || "OK"}</button>}
                 </div>
             </div>
         </div>
