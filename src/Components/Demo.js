@@ -33,7 +33,7 @@ export default function Excursions() {
             return <Loader display={true}/>
         }
         const exhibit = exhibits.find(exhibit => exhibit.index === index);
-        return <div class="exhibit card">
+        return <div class="exhibit card" onClick={()=>onSwipe(exhibits, index)}>
             {exhibit.isPicture ?
             <img src={exhibit.mediaUrl} alt={exhibit.name}></img> :
             <iframe src={exhibit.mediaUrl} title={exhibit.name} allowFullScreen> </iframe>}
@@ -42,13 +42,21 @@ export default function Excursions() {
         </div>
             
     }
-
+    //onTouchStart={()=>onSwipe(exhibits, index, false)} onTouchEnd={()=>onSwipe(exhibits, index, true)}
     const mapExhibitsButtons = (exhibits) => {
         return exhibits.map(exhibit => 
             <button onClick={()=>setCurrentExhibit(exhibit.index)} className="btn btn-white btn-classic">{exhibit.index+1} {exhibit.name}</button>)
     }
 
-    
+    const onSwipe = (exhibits, currentExhibit) => {
+        if(currentExhibit < exhibits.length-1){
+            setCurrentExhibit(currentExhibit+1);
+        }else{
+            setCurrentExhibit(0);
+        }
+        
+    }
+
 
     return exhibits ? (
         <div className="exhibits-plot">
